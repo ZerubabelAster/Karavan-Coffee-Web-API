@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KaravanCoffeeWebAPI", "KaravanCoffeeWebAPI.csproj", "{9AC3941C-E13B-4208-BC47-CE7E742C238F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AC3941C-E13B-4208-BC47-CE7E742C238F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AC3941C-E13B-4208-BC47-CE7E742C238F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AC3941C-E13B-4208-BC47-CE7E742C238F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AC3941C-E13B-4208-BC47-CE7E742C238F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B665265-9F9E-4927-8EFB-0C31C854C227}
+	EndGlobalSection
+EndGlobal
