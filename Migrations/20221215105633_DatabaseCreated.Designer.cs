@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KaravanCoffeeWebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221215010700_Database_Created")]
+    [Migration("20221215105633_DatabaseCreated")]
     partial class DatabaseCreated
     {
         /// <inheritdoc />
@@ -116,12 +116,18 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<double>("TotalPrice")
                         .HasColumnType("double");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(95)");
+
                     b.Property<byte>("Void")
                         .HasColumnType("tinyint unsigned");
 
                     b.HasKey("OrderId");
 
                     b.HasIndex("BranchId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -244,8 +250,8 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<byte>("Active")
-                        .HasColumnType("tinyint unsigned");
+                    b.Property<bool>("Active")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<double>("Discount")
                         .HasColumnType("double");
@@ -254,11 +260,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Keyword")
+                    b.Property<string>("MainIngredients")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ProductCategory")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProductCode")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -280,8 +290,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("double");
 
-                    b.Property<byte>("RequireExtra")
-                        .HasColumnType("tinyint unsigned");
+                    b.Property<bool>("RequireExtra")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("TotalOrdered")
+                        .HasColumnType("int");
 
                     b.Property<double>("UnitPrice")
                         .HasColumnType("double");
@@ -293,19 +306,237 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasData(
                         new
                         {
+                            ProductId = 1,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000001",
+                            ProductDescription = "",
+                            ProductName = "ANBESA BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 35.0
+                        },
+                        new
+                        {
                             ProductId = 2,
-                            Active = (byte)1,
-                            Discount = 2.0,
-                            ImagePath = "test",
-                            Keyword = "test",
-                            ProductCategory = "test",
-                            ProductDescription = "test",
-                            ProductName = "test",
-                            ProductPoint = 10,
-                            ProductSubCategory = "test",
-                            Rating = 4.0,
-                            RequireExtra = (byte)1,
-                            UnitPrice = 10.0
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000002",
+                            ProductDescription = "",
+                            ProductName = "ARADA BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 45.0
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000003",
+                            ProductDescription = "",
+                            ProductName = "BEDELE BEER BIG",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 45.0
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000004",
+                            ProductDescription = "",
+                            ProductName = "BEDELE BEER SMALL",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000005",
+                            ProductDescription = "",
+                            ProductName = "CASTLE BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 6,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000006",
+                            ProductDescription = "",
+                            ProductName = "DASHEN BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000007",
+                            ProductDescription = "",
+                            ProductName = "HABESHA BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 8,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000008",
+                            ProductDescription = "",
+                            ProductName = "HARAR BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000009",
+                            ProductDescription = "",
+                            ProductName = "HEINEKEN BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 33.0
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000010",
+                            ProductDescription = "",
+                            ProductName = "MALTA",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 11,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000011",
+                            ProductDescription = "",
+                            ProductName = "SENQ BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 12,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000012",
+                            ProductDescription = "",
+                            ProductName = "ST GEORGE BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 13,
+                            Active = false,
+                            Discount = 0.0,
+                            ImagePath = "",
+                            MainIngredients = "",
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000013",
+                            ProductDescription = "",
+                            ProductName = "WALIA BEER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED BEER",
+                            Rating = 5.0,
+                            RequireExtra = false,
+                            TotalOrdered = 0,
+                            UnitPrice = 43.0
                         });
                 });
 
@@ -367,29 +598,29 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "433a7a2e-dee3-4363-b9eb-10e0102dc594",
-                            ConcurrencyStamp = "92341501-d223-413c-80b0-6bcc3da722cc",
+                            Id = "75614951-0742-4ee0-b937-bb56e4158a79",
+                            ConcurrencyStamp = "5ed14b50-936e-4cb1-bc99-8845545d567d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "e4f18863-7ab1-42f2-95a5-e39e67686e0d",
-                            ConcurrencyStamp = "688a858f-a6aa-4733-b35f-500ad2636e85",
+                            Id = "3221126e-0aca-4991-8c3e-091ec1df29bb",
+                            ConcurrencyStamp = "5ac39dc9-1fb8-46eb-801d-8ccc19948ee0",
                             Name = "Branch Admin",
                             NormalizedName = "BRANCH ADMIN"
                         },
                         new
                         {
-                            Id = "f1c26746-e76f-4859-9bdd-37718b119099",
-                            ConcurrencyStamp = "4bc42d78-11fa-4760-9ab5-1115dce02758",
+                            Id = "3fda2f02-f303-41c2-a285-b3f7e9ef7a21",
+                            ConcurrencyStamp = "8127e067-83ae-48f4-be3f-07bee1ed5d15",
                             Name = "System Admin",
                             NormalizedName = "SYSTEM ADMIN"
                         },
                         new
                         {
-                            Id = "58fb19cb-a249-4d0e-8ad0-09c80eec7d39",
-                            ConcurrencyStamp = "1495e599-085b-49b8-bcef-caf1ef1b9451",
+                            Id = "5c2ee27a-f157-4758-a8ec-1ef45b801082",
+                            ConcurrencyStamp = "15907dc3-b738-41c5-9fae-35b302136d9b",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -524,7 +755,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("KaravanCoffeeWebAPI.Data.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Branch");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("KaravanCoffeeWebAPI.Data.OrderDetail", b =>

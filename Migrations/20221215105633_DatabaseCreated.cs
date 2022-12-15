@@ -101,24 +101,27 @@ namespace KaravanCoffeeWebAPI.Migrations
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ProductCode = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductDescription = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    UnitPrice = table.Column<double>(type: "double", nullable: false),
                     ProductCategory = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductSubCategory = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ImagePath = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Keyword = table.Column<string>(type: "longtext", nullable: false)
+                    UnitPrice = table.Column<double>(type: "double", nullable: false),
+                    MainIngredients = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Rating = table.Column<double>(type: "double", nullable: false),
-                    RequireExtra = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    RequireExtra = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Discount = table.Column<double>(type: "double", nullable: false),
                     ProductPoint = table.Column<int>(type: "int", nullable: false),
-                    Active = table.Column<byte>(type: "tinyint unsigned", nullable: false)
+                    Rating = table.Column<double>(type: "double", nullable: false),
+                    TotalOrdered = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -277,23 +280,24 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Void = table.Column<byte>(type: "tinyint unsigned", nullable: false),
                     BranchId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(95)",nullable: true)
+                    UserId = table.Column<string>(type: "varchar(95)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Branches_BranchId",
                         column: x => x.BranchId,
                         principalTable: "Branches",
                         principalColumn: "BranchId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -393,16 +397,31 @@ namespace KaravanCoffeeWebAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "433a7a2e-dee3-4363-b9eb-10e0102dc594", "92341501-d223-413c-80b0-6bcc3da722cc", "Customer", "CUSTOMER" },
-                    { "58fb19cb-a249-4d0e-8ad0-09c80eec7d39", "1495e599-085b-49b8-bcef-caf1ef1b9451", "Administrator", "ADMINISTRATOR" },
-                    { "e4f18863-7ab1-42f2-95a5-e39e67686e0d", "688a858f-a6aa-4733-b35f-500ad2636e85", "Branch Admin", "BRANCH ADMIN" },
-                    { "f1c26746-e76f-4859-9bdd-37718b119099", "4bc42d78-11fa-4760-9ab5-1115dce02758", "System Admin", "SYSTEM ADMIN" }
+                    { "3221126e-0aca-4991-8c3e-091ec1df29bb", "5ac39dc9-1fb8-46eb-801d-8ccc19948ee0", "Branch Admin", "BRANCH ADMIN" },
+                    { "3fda2f02-f303-41c2-a285-b3f7e9ef7a21", "8127e067-83ae-48f4-be3f-07bee1ed5d15", "System Admin", "SYSTEM ADMIN" },
+                    { "5c2ee27a-f157-4758-a8ec-1ef45b801082", "15907dc3-b738-41c5-9fae-35b302136d9b", "Administrator", "ADMINISTRATOR" },
+                    { "75614951-0742-4ee0-b937-bb56e4158a79", "5ed14b50-936e-4cb1-bc99-8845545d567d", "Customer", "CUSTOMER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "Active", "Discount", "ImagePath", "Keyword", "ProductCategory", "ProductDescription", "ProductName", "ProductPoint", "ProductSubCategory", "Rating", "RequireExtra", "UnitPrice" },
-                values: new object[] { 2, (byte)1, 2.0, "test", "test", "test", "test", "test", 10, "test", 4.0, (byte)1, 10.0 });
+                columns: new[] { "ProductId", "Active", "Discount", "ImagePath", "MainIngredients", "ProductCategory", "ProductCode", "ProductDescription", "ProductName", "ProductPoint", "ProductSubCategory", "Rating", "RequireExtra", "TotalOrdered", "UnitPrice" },
+                values: new object[,]
+                {
+                    { 1, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000001", "", "ANBESA BEER", 0, "BOTTLED BEER", 5.0, false, 0, 35.0 },
+                    { 2, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000002", "", "ARADA BEER", 0, "BOTTLED BEER", 5.0, false, 0, 45.0 },
+                    { 3, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000003", "", "BEDELE BEER BIG", 0, "BOTTLED BEER", 5.0, false, 0, 45.0 },
+                    { 4, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000004", "", "BEDELE BEER SMALL", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
+                    { 5, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000005", "", "CASTLE BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
+                    { 6, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000006", "", "DASHEN BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
+                    { 7, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000007", "", "HABESHA BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
+                    { 8, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000008", "", "HARAR BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
+                    { 9, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000009", "", "HEINEKEN BEER", 0, "BOTTLED BEER", 5.0, false, 0, 33.0 },
+                    { 10, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000010", "", "MALTA", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
+                    { 11, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000011", "", "SENQ BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
+                    { 12, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000012", "", "ST GEORGE BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
+                    { 13, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000013", "", "WALIA BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -467,6 +486,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductAvailability_BranchId",
                 table: "ProductAvailability",
                 column: "BranchId");
@@ -505,9 +529,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
@@ -515,6 +536,9 @@ namespace KaravanCoffeeWebAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Branches");
