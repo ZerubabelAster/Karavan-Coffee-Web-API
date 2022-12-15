@@ -5,37 +5,32 @@ namespace KaravanCoffeeWebAPI.Models
     public class CreateProductDTO
     {
         [Required]
+        public string ProductCode { get; set; }
+
+        [Required]
         public string ProductName { get; set; }
-
-        [Required]
         public string ProductDescription { get; set; }
-
-        [Required]
-        public double UnitPrice { get; set; }
 
         [Required]
         public string ProductCategory { get; set; }
 
         [Required]
         public string ProductSubCategory { get; set; }
-
-        [Required]
         public string ImagePath { get; set; }
 
-        public string Keyword { get; set; }
+        [Required]
+        public double UnitPrice { get; set; }
+        public string MainIngredients { get; set; } // Before: Keywords, comma separated
 
         [Required]
-        public double Rating { get; set; }
-
-        public byte RequireExtra { get; set; }
-
+        public bool Active { get; set; }
+        public bool RequireExtra { get; set; }
         public double Discount { get; set; }
-
-        [Required]
         public int ProductPoint { get; set; }
 
-        [Required]
-        public byte Active { get; set; }
+        [Range(1, 5)]
+        public double Rating { get; set; }
+        public int TotalOrdered { get; set; }
     }
     public class UpdateProductDTO : CreateProductDTO
     {
