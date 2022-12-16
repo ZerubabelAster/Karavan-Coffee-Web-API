@@ -6,6 +6,8 @@ namespace KaravanCoffeeWebAPI.Data
     {
         public int OrderDetailId { get; set; }
         public int Quantity { get; set; }
+        public string ExtrasRequested { get; set; }
+        public string RemovalRequested { get; set; }
         public double UnitPrice { get; set; }
         public double SubTotal { get; set; }
         public double Rating { get; set; }

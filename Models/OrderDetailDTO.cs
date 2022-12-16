@@ -12,6 +12,9 @@ namespace KaravanCoffeeWebAPI.Models
         [Required]
         public double UnitPrice { get; set; }
 
+        public string ExtrasRequested { get; set; }
+        public string RemovalRequested { get; set; }
+
         [Required]
         public double SubTotal { get; set; }
 

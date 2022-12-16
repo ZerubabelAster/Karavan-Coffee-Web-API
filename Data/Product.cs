@@ -10,12 +10,13 @@
         public string ProductSubCategory { get; set; }
         public string ImagePath { get; set; }
         public double UnitPrice { get; set; }
-        public string MainIngredients { get; set; } // Before: Keywords, comma separated
+        public string Ingredients { get; set; } // comma separated list of ingredients
+        public string Extras { get; set; }  // comma separated list of productId of extra products
         public bool Active { get; set; }
-        public bool RequireExtra { get; set; }
         public double Discount { get; set; }
         public int ProductPoint { get; set; }
         public double Rating { get; set; }
         public int TotalOrdered { get; set; }
+        public DateTime EPT { get; set; } //Estimated Preparation Time for the Product
     }
 }

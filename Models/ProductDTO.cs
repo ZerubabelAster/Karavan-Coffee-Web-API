@@ -20,17 +20,17 @@ namespace KaravanCoffeeWebAPI.Models
 
         [Required]
         public double UnitPrice { get; set; }
-        public string MainIngredients { get; set; } // Before: Keywords, comma separated
-
+        public string Ingredients { get; set; }
+        public string Extras { get; set; }
         [Required]
         public bool Active { get; set; }
-        public bool RequireExtra { get; set; }
         public double Discount { get; set; }
         public int ProductPoint { get; set; }
 
         [Range(1, 5)]
         public double Rating { get; set; }
         public int TotalOrdered { get; set; }
+        public DateTime EPT { get; set; }
     }
     public class UpdateProductDTO : CreateProductDTO
     {
