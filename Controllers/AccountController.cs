@@ -57,7 +57,7 @@ namespace KaravanCoffeeWebAPI.Controllers
                     return BadRequest(ModelState); 
                 }
 
-                await _userManager.AddToRolesAsync(person, personDTO.Roles);
+                await _userManager.AddToRoleAsync(person, personDTO.Role);
                 return Accepted();
             }
             catch (Exception ex)

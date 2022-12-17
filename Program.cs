@@ -1,4 +1,4 @@
-﻿using KaravanCoffeeWebAPI;
+using KaravanCoffeeWebAPI;
 using KaravanCoffeeWebAPI.Configration;
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
@@ -102,11 +102,11 @@ void AddSwaggerDoc(IServiceCollection services)
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 app.UseRouting();

@@ -25,7 +25,7 @@ namespace KaravanCoffeeWebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> GetBranches()
         {
             try
@@ -41,7 +41,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrator, Branch Admin")]
         [HttpGet("{id:int}", Name = "GetBranch")]
         public async Task<IActionResult> GetBranch(int id)
         {
@@ -58,6 +58,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -76,9 +77,9 @@ namespace KaravanCoffeeWebAPI.Controllers
                 await _unitOfWork.Branches.Insert(branch);
                 await _unitOfWork.Save();
 
-                return (IActionResult)Results.Created($"/Branchs/{branch.BranchId}", branch);
+                return StatusCode(201, "Branch Created Successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateBranch)}");
                 return StatusCode(500, "Internal Server Error. Please Try Again Later");
@@ -86,6 +87,7 @@ namespace KaravanCoffeeWebAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -120,6 +122,7 @@ namespace KaravanCoffeeWebAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
