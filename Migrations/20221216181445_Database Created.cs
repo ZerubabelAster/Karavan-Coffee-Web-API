@@ -114,14 +114,16 @@ namespace KaravanCoffeeWebAPI.Migrations
                     ImagePath = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UnitPrice = table.Column<double>(type: "double", nullable: false),
-                    MainIngredients = table.Column<string>(type: "longtext", nullable: false)
+                    Ingredients = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Extras = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Active = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    RequireExtra = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Discount = table.Column<double>(type: "double", nullable: false),
                     ProductPoint = table.Column<int>(type: "int", nullable: false),
                     Rating = table.Column<double>(type: "double", nullable: false),
-                    TotalOrdered = table.Column<int>(type: "int", nullable: false)
+                    TotalOrdered = table.Column<int>(type: "int", nullable: false),
+                    EPT = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -338,6 +340,10 @@ namespace KaravanCoffeeWebAPI.Migrations
                     OrderDetailId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Quantity = table.Column<int>(type: "int", nullable: false),
+                    ExtrasRequested = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    RemovalRequested = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     UnitPrice = table.Column<double>(type: "double", nullable: false),
                     SubTotal = table.Column<double>(type: "double", nullable: false),
                     Rating = table.Column<double>(type: "double", nullable: false),
@@ -397,30 +403,56 @@ namespace KaravanCoffeeWebAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3221126e-0aca-4991-8c3e-091ec1df29bb", "5ac39dc9-1fb8-46eb-801d-8ccc19948ee0", "Branch Admin", "BRANCH ADMIN" },
-                    { "3fda2f02-f303-41c2-a285-b3f7e9ef7a21", "8127e067-83ae-48f4-be3f-07bee1ed5d15", "System Admin", "SYSTEM ADMIN" },
-                    { "5c2ee27a-f157-4758-a8ec-1ef45b801082", "15907dc3-b738-41c5-9fae-35b302136d9b", "Administrator", "ADMINISTRATOR" },
-                    { "75614951-0742-4ee0-b937-bb56e4158a79", "5ed14b50-936e-4cb1-bc99-8845545d567d", "Customer", "CUSTOMER" }
+                    { "0026ec44-afa1-4594-a80a-d3d55a8df5a8", "50e6bf4e-945d-4b4d-95d8-943d260908d6", "Customer", "CUSTOMER" },
+                    { "7dce4bff-2e30-43de-87e7-1475072c7c76", "8057dda1-54bc-47a7-a79f-326a607d7c7c", "Administrator", "ADMINISTRATOR" },
+                    { "9b05d70a-0409-415a-a962-6b0def8c35a0", "7efee65f-5b43-420b-8ea3-0be08b8e8624", "Branch Admin", "BRANCH ADMIN" },
+                    { "cdbe462f-dede-466e-a817-c6e807da59cf", "ef6b63a7-9662-4980-b579-ceddf6902cdc", "System Admin", "SYSTEM ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "Active", "Discount", "ImagePath", "MainIngredients", "ProductCategory", "ProductCode", "ProductDescription", "ProductName", "ProductPoint", "ProductSubCategory", "Rating", "RequireExtra", "TotalOrdered", "UnitPrice" },
+                columns: new[] { "ProductId", "Active", "Discount", "EPT", "Extras", "ImagePath", "Ingredients", "ProductCategory", "ProductCode", "ProductDescription", "ProductName", "ProductPoint", "ProductSubCategory", "Rating", "TotalOrdered", "UnitPrice" },
                 values: new object[,]
                 {
-                    { 1, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000001", "", "ANBESA BEER", 0, "BOTTLED BEER", 5.0, false, 0, 35.0 },
-                    { 2, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000002", "", "ARADA BEER", 0, "BOTTLED BEER", 5.0, false, 0, 45.0 },
-                    { 3, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000003", "", "BEDELE BEER BIG", 0, "BOTTLED BEER", 5.0, false, 0, 45.0 },
-                    { 4, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000004", "", "BEDELE BEER SMALL", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
-                    { 5, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000005", "", "CASTLE BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
-                    { 6, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000006", "", "DASHEN BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
-                    { 7, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000007", "", "HABESHA BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
-                    { 8, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000008", "", "HARAR BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
-                    { 9, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000009", "", "HEINEKEN BEER", 0, "BOTTLED BEER", 5.0, false, 0, 33.0 },
-                    { 10, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000010", "", "MALTA", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
-                    { 11, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000011", "", "SENQ BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
-                    { 12, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000012", "", "ST GEORGE BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 },
-                    { 13, false, 0.0, "", "", "ALCOHOLIC BEVERAGES", "PML-000013", "", "WALIA BEER", 0, "BOTTLED BEER", 5.0, false, 0, 43.0 }
+                    { 1, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000001", "", "ANBESA BEER", 0, "BOTTLED BEER", 5.0, 0, 35.0 },
+                    { 2, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000002", "", "ARADA BEER", 0, "BOTTLED BEER", 5.0, 0, 45.0 },
+                    { 3, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000003", "", "BEDELE BEER BIG", 0, "BOTTLED BEER", 5.0, 0, 45.0 },
+                    { 4, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000004", "", "BEDELE BEER SMALL", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 5, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000005", "", "CASTLE BEER", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 6, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000006", "", "DASHEN BEER", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 7, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000007", "", "HABESHA BEER", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 8, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000008", "", "HARAR BEER", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 9, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000009", "", "HEINEKEN BEER", 0, "BOTTLED BEER", 5.0, 0, 33.0 },
+                    { 10, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000010", "", "MALTA", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 11, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000011", "", "SENQ BEER", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 12, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000012", "", "ST GEORGE BEER", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 13, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000013", "", "WALIA BEER", 0, "BOTTLED BEER", 5.0, 0, 43.0 },
+                    { 14, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000014", "", "ACACIA DRY RED WINE", 0, "BOTTLED WINE", 5.0, 0, 480.0 },
+                    { 15, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000015", "", "ACACIA DRY WHITE WINE", 0, "BOTTLED WINE", 5.0, 0, 480.0 },
+                    { 16, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000016", "", "ACACIA ROSE WINE", 0, "BOTTLED WINE", 5.0, 0, 480.0 },
+                    { 17, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000017", "", "ACACIA SWEET RED WINE", 0, "BOTTLED WINE", 5.0, 0, 480.0 },
+                    { 18, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000018", "", "ACACIA SWEET WHITE WINE", 0, "BOTTLED WINE", 5.0, 0, 480.0 },
+                    { 19, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000019", "", "AWASH TEKESHINO", 0, "BOTTLED WINE", 5.0, 0, 350.0 },
+                    { 20, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000020", "", "AWASH WINE", 0, "BOTTLED WINE", 5.0, 0, 250.0 },
+                    { 21, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000021", "", "AXUMIT RED WINE", 0, "BOTTLED WINE", 5.0, 0, 350.0 },
+                    { 22, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000022", "", "HENDEKE RED WINE", 0, "BOTTLED WINE", 5.0, 0, 250.0 },
+                    { 23, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000023", "", "RIFT VALLEY MERLOT", 0, "BOTTLED WINE", 5.0, 0, 480.0 },
+                    { 24, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000024", "", "RIFT VALLEY CHARDONNAY", 0, "BOTTLED WINE", 5.0, 0, 480.0 },
+                    { 25, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000025", "", "SHEBELE WHITE WINE", 0, "BOTTLED WINE", 5.0, 0, 250.0 },
+                    { 26, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000026", "", "TEJ 1 LITER", 0, "BOTTLED WINE", 5.0, 0, 280.0 },
+                    { 27, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000027", "", "ST.GEORGE JAMBO DRAFT", 0, "DRAFT BEER", 5.0, 0, 34.0 },
+                    { 28, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000028", "", "ST.GEORGE SINGLE DRAFT", 0, "DRAFT BEER", 5.0, 0, 23.0 },
+                    { 29, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000029", "", "WALIA JAMBO DRAFT", 0, "DRAFT BEER", 5.0, 0, 34.0 },
+                    { 30, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000030", "", "WALIA SINGLE DRAFT", 0, "DRAFT BEER", 5.0, 0, 23.0 },
+                    { 31, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000031", "", "ABSOLUTE VODKA HALF BOTTLE(MEZO)", 0, "LIQUOR", 5.0, 0, 1200.0 },
+                    { 32, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000032", "", "BLACK LABEL DOUBLE SHOT", 0, "LIQUOR", 5.0, 0, 280.0 },
+                    { 33, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000033", "", "CHIVAS REGAL DOUBLE SHOT", 0, "LIQUOR", 5.0, 0, 150.0 },
+                    { 34, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000034", "", "JACK  DANIELS HALF BOTTLE(MEZO)", 0, "LIQUOR", 5.0, 0, 4800.0 },
+                    { 35, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000035", "", "OX CAFE", 0, "LIQUOR", 5.0, 0, 4200.0 },
+                    { 36, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000036", "", "RED LABEL DOUBLE SHAT", 0, "LIQUOR", 5.0, 0, 150.0 },
+                    { 37, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000037", "", "SPECIAL GOLD LABEL WHISKY", 0, "LIQUOR", 5.0, 0, 5000.0 },
+                    { 38, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000038", "", "STOLICHINYA DOUBLE SHAT", 0, "LIQUOR", 5.0, 0, 165.0 },
+                    { 39, false, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "", "", "ALCOHOLIC BEVERAGES", "PML-000039", "", "WHITE HORSE DOUBLE SHAT", 0, "LIQUOR", 5.0, 0, 75.0 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -2,6 +2,7 @@
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,7 @@ namespace KaravanCoffeeWebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> GetLoyaltiesDetail()
         {
@@ -39,6 +41,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpGet("{id:int}", Name = "GetLoyalityDetail")]
         public async Task<IActionResult> GetLoyalityDetail(int id)
         {
@@ -55,6 +58,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -73,7 +77,7 @@ namespace KaravanCoffeeWebAPI.Controllers
                 await _unitOfWork.LoyaltiesDetail.Insert(loyalityDetail);
                 await _unitOfWork.Save();
 
-                return CreatedAtRoute("GetLoyalityDetail", new { id = loyalityDetail.LoyalityId }, loyalityDetail);
+                return StatusCode(201, "Reward Created Sussfully");
             }
             catch (Exception ex)
             {
@@ -82,6 +86,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -109,13 +114,14 @@ namespace KaravanCoffeeWebAPI.Controllers
 
                 return NoContent();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _logger.LogError($"Someting Went Wrong in the {nameof(UpdateLoyalityDetail)}");
                 return BadRequest(ModelState);
             }
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

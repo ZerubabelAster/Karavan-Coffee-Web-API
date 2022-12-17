@@ -2,6 +2,7 @@
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,7 @@ namespace KaravanCoffeeWebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> GetOrderDetails()
         {
@@ -39,6 +41,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator, Cutomer")]
         [HttpGet("{id:int}", Name = "GetOrderDetail")]
         public async Task<IActionResult> GetOrderDetail(int id)
         {
@@ -55,6 +58,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles ="Customer")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -73,7 +77,7 @@ namespace KaravanCoffeeWebAPI.Controllers
                 await _unitOfWork.OrdersDetail.Insert(orderDetail);
                 await _unitOfWork.Save();
 
-                return CreatedAtRoute("GetOrderDetail", new { id = orderDetail.OrderDetailId }, orderDetail);
+                return Accepted();
             }
             catch (Exception ex)
             {
@@ -82,6 +86,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator, Customer")]
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -116,6 +121,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

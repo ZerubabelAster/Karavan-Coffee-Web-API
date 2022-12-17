@@ -2,6 +2,7 @@
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,7 @@ namespace KaravanCoffeeWebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Administrator, Branch Admin, Customer")]
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
@@ -39,6 +41,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator, Branch Admin, Customer")]
         [HttpGet("{id:int}", Name = "GetProduct")]
         public async Task<IActionResult> GetProduct(int id)
         {
@@ -55,6 +58,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -73,7 +77,7 @@ namespace KaravanCoffeeWebAPI.Controllers
                 await _unitOfWork.Products.Insert(product);
                 await _unitOfWork.Save();
 
-                return CreatedAtRoute("GetProduct", new { id = product.ProductId }, product);
+                return StatusCode(201, "Product Created Successfully");
             }
             catch (Exception ex)
             {
@@ -82,6 +86,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -116,6 +121,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

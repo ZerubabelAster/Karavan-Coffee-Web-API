@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace KaravanCoffeeWebAPI.Models
 {
@@ -23,6 +24,8 @@ namespace KaravanCoffeeWebAPI.Models
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        public ICollection<string> Roles { get; set; }
+        [Required]
+        [DefaultValue("Customer")]
+        public string Role { get; set; }
     }
 }
