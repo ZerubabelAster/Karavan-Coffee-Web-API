@@ -1,4 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AutoMapper.Configuration.Annotations;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using Xunit;
+using Xunit.Sdk;
 
 namespace KaravanCoffeeWebAPI.Models
 {
@@ -16,7 +22,6 @@ namespace KaravanCoffeeWebAPI.Models
 
         [Required]
         public string ProductSubCategory { get; set; }
-        public string ImagePath { get; set; }
 
         [Required]
         public double UnitPrice { get; set; }
@@ -31,6 +36,13 @@ namespace KaravanCoffeeWebAPI.Models
         [Range(1, 5)]
         public double Rating { get; set; }
         public int TotalOrdered { get; set; }
+
+        //[RequestSizeLimit(10485760)] /*, ErrorMessage = "File Size Must be"*/
+        public IFormFile Image { get; set; }
+
+        [HiddenInput]
+        [StringLength(int.MaxValue)]
+        public string ImagePath { get; set; }
     }
     public class UpdateProductDTO : CreateProductDTO
     {

@@ -1,4 +1,7 @@
-﻿namespace KaravanCoffeeWebAPI.Data
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace KaravanCoffeeWebAPI.Data
 {
     public class Product
     {
@@ -8,7 +11,6 @@
         public string ProductDescription { get; set; }
         public string ProductCategory { get; set; }
         public string ProductSubCategory { get; set; }
-        public string ImagePath { get; set; }
         public double UnitPrice { get; set; }
         public string MainIngredients { get; set; } // Before: Keywords, comma separated
         public bool Active { get; set; }
@@ -17,5 +19,13 @@
         public int ProductPoint { get; set; }
         public double Rating { get; set; }
         public int TotalOrdered { get; set; }
+
+        [NotMapped]
+        public IFormFile Image { get; set; }
+
+        [HiddenInput]
+        public string? ImagePath { get; set; }
+
+
     }
 }

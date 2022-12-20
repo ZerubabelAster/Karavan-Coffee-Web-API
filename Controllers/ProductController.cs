@@ -5,6 +5,7 @@ using KaravanCoffeeWebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace KaravanCoffeeWebAPI.Controllers
 {
@@ -15,13 +16,15 @@ namespace KaravanCoffeeWebAPI.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProductController> _logger;
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _environment;
 
-        public ProductController(IUnitOfWork unitOfWork, ILogger<ProductController> logger, IMapper mapper)
+
+        public ProductController(IUnitOfWork unitOfWork, ILogger<ProductController> logger, IMapper mapper, IWebHostEnvironment environment)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
-
+            _environment = environment;
         }
 
         [Authorize(Roles = "Administrator, Branch Admin, Customer")]
@@ -58,12 +61,12 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductDTO productDTO)
+        public async Task<IActionResult> CreateProduct([FromForm] CreateProductDTO productDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -73,8 +76,12 @@ namespace KaravanCoffeeWebAPI.Controllers
 
             try
             {
+                //var path1 = Path.GetFullPath()
+                var path = Path.Combine("C:\\Users\\Administrator\\source\\repos\\Karavan Coffee Web API\\", "Asset/Products/" , productDTO.Image.FileName);
+                productDTO.ImagePath = path;
                 var product = _mapper.Map<Product>(productDTO);
                 await _unitOfWork.Products.Insert(product);
+                await _unitOfWork.Products.SaveImage(product.Image, path);
                 await _unitOfWork.Save();
 
                 return StatusCode(201, "Product Created Successfully");

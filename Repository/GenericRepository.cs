@@ -10,6 +10,7 @@ namespace KaravanCoffeeWebAPI.Repository
     {
         private readonly DatabaseContext _context;
         private readonly DbSet<T> _db;
+        private readonly IWebHostEnvironment _environment;
 
         public GenericRepository(DatabaseContext context)
         {
@@ -76,7 +77,16 @@ namespace KaravanCoffeeWebAPI.Repository
         {
             await _db.AddRangeAsync(entities);
         }
+        public async Task SaveImage(IFormFile image, string path)
+        {
+            //var upload = Path.Combine(_environment.WebRootPath, path, "posts", imageName);
 
+            using(FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+                stream.Close();
+            }
+        }
         public void Update(T entity)
         {
             _db.Attach(entity);

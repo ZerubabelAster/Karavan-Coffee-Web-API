@@ -15,6 +15,7 @@ namespace KaravanCoffeeWebAPI.IRepository
         Task Insert(T entity);
         Task InsertRange(IEnumerable<T> entities);
         Task Delete(int id);
+        Task SaveImage(IFormFile image,string path);
         void DeleteRange(IEnumerable<T> entities);
         void Update(T entity);
     }

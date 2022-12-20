@@ -254,7 +254,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .HasColumnType("double");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("MainIngredients")
@@ -595,29 +594,29 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "75614951-0742-4ee0-b937-bb56e4158a79",
-                            ConcurrencyStamp = "5ed14b50-936e-4cb1-bc99-8845545d567d",
+                            Id = "7231ce0b-7d7f-43cb-95f1-e814711e71c8",
+                            ConcurrencyStamp = "31be6789-f03b-4561-b86f-d16aa247298a",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "3221126e-0aca-4991-8c3e-091ec1df29bb",
-                            ConcurrencyStamp = "5ac39dc9-1fb8-46eb-801d-8ccc19948ee0",
+                            Id = "18fb115f-a8ba-4f66-a090-a86aa012d6ea",
+                            ConcurrencyStamp = "04f3a2f4-1056-430f-9910-f95e521f0d15",
                             Name = "Branch Admin",
                             NormalizedName = "BRANCH ADMIN"
                         },
                         new
                         {
-                            Id = "3fda2f02-f303-41c2-a285-b3f7e9ef7a21",
-                            ConcurrencyStamp = "8127e067-83ae-48f4-be3f-07bee1ed5d15",
+                            Id = "24765097-8ee5-49d6-a98d-290383b0f563",
+                            ConcurrencyStamp = "b779c006-c61d-4c86-9572-ded562582858",
                             Name = "System Admin",
                             NormalizedName = "SYSTEM ADMIN"
                         },
                         new
                         {
-                            Id = "5c2ee27a-f157-4758-a8ec-1ef45b801082",
-                            ConcurrencyStamp = "15907dc3-b738-41c5-9fae-35b302136d9b",
+                            Id = "08d2c838-ecb2-45af-9d7e-0f40bf0a4d45",
+                            ConcurrencyStamp = "a223c7e9-0d44-4f2f-b5d7-38f2dac2429e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
