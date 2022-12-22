@@ -20,8 +20,10 @@ namespace KaravanCoffeeWebAPI.Models
 
         [Required]
         public double UnitPrice { get; set; }
-        public string Ingredients { get; set; }
-        public string Extras { get; set; }
+        public List<string> Ingredients { get; set; }
+        public List<int> Extras { get; set; }
+        [Required]
+        public bool Orderable { get; set; }
         [Required]
         public bool Active { get; set; }
         public double Discount { get; set; }

@@ -10,8 +10,9 @@
         public string ProductSubCategory { get; set; }
         public string ImagePath { get; set; }
         public double UnitPrice { get; set; }
-        public string Ingredients { get; set; } // comma separated list of ingredients
-        public string Extras { get; set; }  // comma separated list of productId of extra products
+        public List<string> Ingredients { get; set; } // list of ingredients
+        public List<int> Extras { get; set; }  // list of productId of extra products
+        public bool Orderable { get; set; } // True if product is orderable
         public bool Active { get; set; }
         public double Discount { get; set; }
         public int ProductPoint { get; set; }
