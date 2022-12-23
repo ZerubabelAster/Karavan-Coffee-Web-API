@@ -20,8 +20,8 @@ namespace KaravanCoffeeWebAPI.Models
 
         [Required]
         public double UnitPrice { get; set; }
-        public List<string> Ingredients { get; set; }
-        public List<int> Extras { get; set; }
+        public string Ingredients { get; set; }
+        public string Extras { get; set; }
         [Required]
         public bool Orderable { get; set; }
         [Required]
@@ -32,7 +32,7 @@ namespace KaravanCoffeeWebAPI.Models
         [Range(1, 5)]
         public double Rating { get; set; }
         public int TotalOrdered { get; set; }
-        public DateTime EPT { get; set; }
+        public TimeOnly EPT { get; set; }
     }
     public class UpdateProductDTO : CreateProductDTO
     {

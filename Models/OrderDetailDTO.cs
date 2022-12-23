@@ -12,8 +12,8 @@ namespace KaravanCoffeeWebAPI.Models
         [Required]
         public double UnitPrice { get; set; }
 
-        public List<int> ExtrasRequested { get; set; } //ProductID of the extra product
-        public List<string> RemovalRequested { get; set; } //ingredients to be removed
+        public string ExtrasRequested { get; set; } //ProductID of the extra product
+        public string RemovalRequested { get; set; } //ingredients to be removed
         public double ExtraCharge { get; set; }
         public double Discount { get; set; }
         [Required]

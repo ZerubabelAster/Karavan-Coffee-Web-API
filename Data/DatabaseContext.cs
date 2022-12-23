@@ -10,7 +10,6 @@ namespace KaravanCoffeeWebAPI.Data
         {
 
         }
-
         public DbSet<Person> Persons { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -18,7 +17,7 @@ namespace KaravanCoffeeWebAPI.Data
         public DbSet<Branch> Branches { get; set; }
         public DbSet<ProductAvailability> ProductAvailability { get; set; }
         public DbSet<LoyalityDetail> LoyalityDetail { get; set; }
-
+        public DbSet<Gallery> Gallery { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KaravanCoffeeWebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221216181445_Database Created")]
-    partial class DatabaseCreated
+    [Migration("20221222155804_GalleryAdded_2")]
+    partial class GalleryAdded2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,36 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasKey("BranchId");
 
                     b.ToTable("Branches");
+                });
+
+            modelBuilder.Entity("KaravanCoffeeWebAPI.Data.Gallery", b =>
+                {
+                    b.Property<int>("GalleryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UploadDateTime")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("GalleryId");
+
+                    b.ToTable("Gallery");
                 });
 
             modelBuilder.Entity("KaravanCoffeeWebAPI.Data.LoyalityDetail", b =>
@@ -137,6 +167,12 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<int>("OrderDetailId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("double");
+
+                    b.Property<double>("ExtraCharge")
+                        .HasColumnType("double");
 
                     b.Property<string>("ExtrasRequested")
                         .IsRequired()
@@ -264,8 +300,8 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("double");
 
-                    b.Property<DateTime>("EPT")
-                        .HasColumnType("datetime");
+                    b.Property<TimeOnly>("EPT")
+                        .HasColumnType("time(0)");
 
                     b.Property<string>("Extras")
                         .IsRequired()
@@ -278,6 +314,9 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<string>("Ingredients")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("Orderable")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ProductCategory")
                         .IsRequired()
@@ -321,10 +360,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 1,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000001",
                             ProductDescription = "",
@@ -340,10 +380,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 2,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000002",
                             ProductDescription = "",
@@ -359,10 +400,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 3,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000003",
                             ProductDescription = "",
@@ -378,10 +420,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 4,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000004",
                             ProductDescription = "",
@@ -397,10 +440,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 5,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000005",
                             ProductDescription = "",
@@ -416,10 +460,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 6,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000006",
                             ProductDescription = "",
@@ -435,10 +480,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 7,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000007",
                             ProductDescription = "",
@@ -454,10 +500,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 8,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000008",
                             ProductDescription = "",
@@ -473,10 +520,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 9,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000009",
                             ProductDescription = "",
@@ -492,10 +540,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 10,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000010",
                             ProductDescription = "",
@@ -511,10 +560,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 11,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000011",
                             ProductDescription = "",
@@ -530,10 +580,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 12,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000012",
                             ProductDescription = "",
@@ -549,10 +600,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 13,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000013",
                             ProductDescription = "",
@@ -568,10 +620,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 14,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000014",
                             ProductDescription = "",
@@ -587,10 +640,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 15,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000015",
                             ProductDescription = "",
@@ -606,10 +660,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 16,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000016",
                             ProductDescription = "",
@@ -625,10 +680,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 17,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000017",
                             ProductDescription = "",
@@ -644,10 +700,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 18,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000018",
                             ProductDescription = "",
@@ -663,10 +720,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 19,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000019",
                             ProductDescription = "",
@@ -682,10 +740,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 20,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000020",
                             ProductDescription = "",
@@ -701,10 +760,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 21,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000021",
                             ProductDescription = "",
@@ -720,10 +780,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 22,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000022",
                             ProductDescription = "",
@@ -739,10 +800,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 23,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000023",
                             ProductDescription = "",
@@ -758,10 +820,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 24,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000024",
                             ProductDescription = "",
@@ -777,10 +840,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 25,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000025",
                             ProductDescription = "",
@@ -796,10 +860,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 26,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000026",
                             ProductDescription = "",
@@ -815,10 +880,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 27,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000027",
                             ProductDescription = "",
@@ -834,10 +900,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 28,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000028",
                             ProductDescription = "",
@@ -853,10 +920,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 29,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000029",
                             ProductDescription = "",
@@ -872,10 +940,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 30,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000030",
                             ProductDescription = "",
@@ -891,10 +960,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 31,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000031",
                             ProductDescription = "",
@@ -910,10 +980,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 32,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000032",
                             ProductDescription = "",
@@ -929,10 +1000,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 33,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000033",
                             ProductDescription = "",
@@ -948,10 +1020,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 34,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000034",
                             ProductDescription = "",
@@ -967,10 +1040,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 35,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000035",
                             ProductDescription = "",
@@ -986,10 +1060,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 36,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000036",
                             ProductDescription = "",
@@ -1005,10 +1080,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 37,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000037",
                             ProductDescription = "",
@@ -1024,10 +1100,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 38,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000038",
                             ProductDescription = "",
@@ -1043,10 +1120,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 39,
                             Active = false,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EPT = new TimeOnly(0, 0, 0),
                             Extras = "",
                             ImagePath = "",
                             Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000039",
                             ProductDescription = "",
@@ -1117,29 +1195,29 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0026ec44-afa1-4594-a80a-d3d55a8df5a8",
-                            ConcurrencyStamp = "50e6bf4e-945d-4b4d-95d8-943d260908d6",
+                            Id = "091f67cb-1340-4d90-9258-36caab10c1f3",
+                            ConcurrencyStamp = "3c4d809c-1366-42de-9995-507933792732",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "9b05d70a-0409-415a-a962-6b0def8c35a0",
-                            ConcurrencyStamp = "7efee65f-5b43-420b-8ea3-0be08b8e8624",
+                            Id = "d99c1efa-8f99-413e-803c-97aff3be4009",
+                            ConcurrencyStamp = "b05b3715-194a-4fd1-aafb-7e7acef462ef",
                             Name = "Branch Admin",
                             NormalizedName = "BRANCH ADMIN"
                         },
                         new
                         {
-                            Id = "cdbe462f-dede-466e-a817-c6e807da59cf",
-                            ConcurrencyStamp = "ef6b63a7-9662-4980-b579-ceddf6902cdc",
+                            Id = "ae35553f-e551-4916-b858-9b3ea1a9ae52",
+                            ConcurrencyStamp = "f8efa564-81b4-456d-a1a7-0e2151073890",
                             Name = "System Admin",
                             NormalizedName = "SYSTEM ADMIN"
                         },
                         new
                         {
-                            Id = "7dce4bff-2e30-43de-87e7-1475072c7c76",
-                            ConcurrencyStamp = "8057dda1-54bc-47a7-a79f-326a607d7c7c",
+                            Id = "bd6b36df-7c12-4a04-a988-bc3259a3899e",
+                            ConcurrencyStamp = "0ddd249a-0f29-47a2-8458-d861d86ef5d2",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
