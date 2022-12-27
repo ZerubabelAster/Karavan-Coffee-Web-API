@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-﻿using System.ComponentModel.DataAnnotations;
-=======
-﻿using AutoMapper.Configuration.Annotations;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -32,6 +27,8 @@ namespace KaravanCoffeeWebAPI.Models
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        public ICollection<string> Roles { get; set; }
+        [Required]
+        [DefaultValue("Customer")]
+        public string Role { get; set; }
     }
 }

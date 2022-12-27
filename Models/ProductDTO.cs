@@ -37,6 +37,8 @@ namespace KaravanCoffeeWebAPI.Models
         public string Ingredients { get; set; }
         public string Extras { get; set; }
         [Required]
+        public bool Orderable { get; set; }
+        [Required]
         public bool Active { get; set; }
 =======
         public double UnitPrice { get; set; }
@@ -57,21 +59,7 @@ namespace KaravanCoffeeWebAPI.Models
         public double Rating { get; set; }
 
         public int TotalOrdered { get; set; }
-<<<<<<< Updated upstream
         public DateTime EPT { get; set; }
-=======
-
-        //[RequestSizeLimit(10485760)] /*, ErrorMessage = "File Size Must be"*/
-        public IFormFile Image { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
-        [StringLength(int.MaxValue)]
-        public string ImagePath { get; set; }
-
-        public int CategoryId { get; set; }
-
-        public int SubCategoryId { get; set; }
->>>>>>> Stashed changes
     }
     public class UpdateProductDTO : CreateProductDTO
     {

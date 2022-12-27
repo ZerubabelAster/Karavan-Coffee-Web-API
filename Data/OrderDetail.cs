@@ -9,7 +9,9 @@ namespace KaravanCoffeeWebAPI.Data
         public string ExtrasRequested { get; set; }
         public string RemovalRequested { get; set; }
         public double UnitPrice { get; set; }
-        public double SubTotal { get; set; }
+        public double ExtraCharge { get; set; }
+        public double Discount { get; set; }
+        public double SubTotal { get; set; } // VAT and GrandTotal calculated based on SubTotal, which are both not needed to be stored
         public double Rating { get; set; }
 
         [ForeignKey(nameof(Order))]

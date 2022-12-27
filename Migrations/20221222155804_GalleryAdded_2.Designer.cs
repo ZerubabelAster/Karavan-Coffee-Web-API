@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KaravanCoffeeWebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221215105633_DatabaseCreated")]
-    partial class DatabaseCreated
+    [Migration("20221222155804_GalleryAdded_2")]
+    partial class GalleryAdded2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,36 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasKey("BranchId");
 
                     b.ToTable("Branches");
+                });
+
+            modelBuilder.Entity("KaravanCoffeeWebAPI.Data.Gallery", b =>
+                {
+                    b.Property<int>("GalleryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("UploadDateTime")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("GalleryId");
+
+                    b.ToTable("Gallery");
                 });
 
             modelBuilder.Entity("KaravanCoffeeWebAPI.Data.LoyalityDetail", b =>
@@ -138,6 +168,16 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<double>("Discount")
+                        .HasColumnType("double");
+
+                    b.Property<double>("ExtraCharge")
+                        .HasColumnType("double");
+
+                    b.Property<string>("ExtrasRequested")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
@@ -149,6 +189,10 @@ namespace KaravanCoffeeWebAPI.Migrations
 
                     b.Property<double>("Rating")
                         .HasColumnType("double");
+
+                    b.Property<string>("RemovalRequested")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<double>("SubTotal")
                         .HasColumnType("double");
@@ -256,13 +300,23 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("double");
 
+                    b.Property<TimeOnly>("EPT")
+                        .HasColumnType("time(0)");
+
+                    b.Property<string>("Extras")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("MainIngredients")
+                    b.Property<string>("Ingredients")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("Orderable")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ProductCategory")
                         .IsRequired()
@@ -290,9 +344,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("double");
 
-                    b.Property<bool>("RequireExtra")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<int>("TotalOrdered")
                         .HasColumnType("int");
 
@@ -309,8 +360,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 1,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000001",
                             ProductDescription = "",
@@ -318,7 +372,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 35.0
                         },
@@ -327,8 +380,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 2,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000002",
                             ProductDescription = "",
@@ -336,7 +392,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 45.0
                         },
@@ -345,8 +400,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 3,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000003",
                             ProductDescription = "",
@@ -354,7 +412,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 45.0
                         },
@@ -363,8 +420,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 4,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000004",
                             ProductDescription = "",
@@ -372,7 +432,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -381,8 +440,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 5,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000005",
                             ProductDescription = "",
@@ -390,7 +452,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -399,8 +460,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 6,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000006",
                             ProductDescription = "",
@@ -408,7 +472,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -417,8 +480,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 7,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000007",
                             ProductDescription = "",
@@ -426,7 +492,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -435,8 +500,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 8,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000008",
                             ProductDescription = "",
@@ -444,7 +512,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -453,8 +520,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 9,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000009",
                             ProductDescription = "",
@@ -462,7 +532,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 33.0
                         },
@@ -471,8 +540,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 10,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000010",
                             ProductDescription = "",
@@ -480,7 +552,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -489,8 +560,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 11,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000011",
                             ProductDescription = "",
@@ -498,7 +572,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -507,8 +580,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 12,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000012",
                             ProductDescription = "",
@@ -516,7 +592,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -525,8 +600,11 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductId = 13,
                             Active = false,
                             Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
                             ImagePath = "",
-                            MainIngredients = "",
+                            Ingredients = "",
+                            Orderable = false,
                             ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000013",
                             ProductDescription = "",
@@ -534,9 +612,528 @@ namespace KaravanCoffeeWebAPI.Migrations
                             ProductPoint = 0,
                             ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
-                            RequireExtra = false,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
+                        },
+                        new
+                        {
+                            ProductId = 14,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000014",
+                            ProductDescription = "",
+                            ProductName = "ACACIA DRY RED WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 480.0
+                        },
+                        new
+                        {
+                            ProductId = 15,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000015",
+                            ProductDescription = "",
+                            ProductName = "ACACIA DRY WHITE WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 480.0
+                        },
+                        new
+                        {
+                            ProductId = 16,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000016",
+                            ProductDescription = "",
+                            ProductName = "ACACIA ROSE WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 480.0
+                        },
+                        new
+                        {
+                            ProductId = 17,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000017",
+                            ProductDescription = "",
+                            ProductName = "ACACIA SWEET RED WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 480.0
+                        },
+                        new
+                        {
+                            ProductId = 18,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000018",
+                            ProductDescription = "",
+                            ProductName = "ACACIA SWEET WHITE WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 480.0
+                        },
+                        new
+                        {
+                            ProductId = 19,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000019",
+                            ProductDescription = "",
+                            ProductName = "AWASH TEKESHINO",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 350.0
+                        },
+                        new
+                        {
+                            ProductId = 20,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000020",
+                            ProductDescription = "",
+                            ProductName = "AWASH WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 250.0
+                        },
+                        new
+                        {
+                            ProductId = 21,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000021",
+                            ProductDescription = "",
+                            ProductName = "AXUMIT RED WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 350.0
+                        },
+                        new
+                        {
+                            ProductId = 22,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000022",
+                            ProductDescription = "",
+                            ProductName = "HENDEKE RED WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 250.0
+                        },
+                        new
+                        {
+                            ProductId = 23,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000023",
+                            ProductDescription = "",
+                            ProductName = "RIFT VALLEY MERLOT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 480.0
+                        },
+                        new
+                        {
+                            ProductId = 24,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000024",
+                            ProductDescription = "",
+                            ProductName = "RIFT VALLEY CHARDONNAY",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 480.0
+                        },
+                        new
+                        {
+                            ProductId = 25,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000025",
+                            ProductDescription = "",
+                            ProductName = "SHEBELE WHITE WINE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 250.0
+                        },
+                        new
+                        {
+                            ProductId = 26,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000026",
+                            ProductDescription = "",
+                            ProductName = "TEJ 1 LITER",
+                            ProductPoint = 0,
+                            ProductSubCategory = "BOTTLED WINE",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 280.0
+                        },
+                        new
+                        {
+                            ProductId = 27,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000027",
+                            ProductDescription = "",
+                            ProductName = "ST.GEORGE JAMBO DRAFT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "DRAFT BEER",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 34.0
+                        },
+                        new
+                        {
+                            ProductId = 28,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000028",
+                            ProductDescription = "",
+                            ProductName = "ST.GEORGE SINGLE DRAFT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "DRAFT BEER",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 23.0
+                        },
+                        new
+                        {
+                            ProductId = 29,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000029",
+                            ProductDescription = "",
+                            ProductName = "WALIA JAMBO DRAFT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "DRAFT BEER",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 34.0
+                        },
+                        new
+                        {
+                            ProductId = 30,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000030",
+                            ProductDescription = "",
+                            ProductName = "WALIA SINGLE DRAFT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "DRAFT BEER",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 23.0
+                        },
+                        new
+                        {
+                            ProductId = 31,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000031",
+                            ProductDescription = "",
+                            ProductName = "ABSOLUTE VODKA HALF BOTTLE(MEZO)",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 1200.0
+                        },
+                        new
+                        {
+                            ProductId = 32,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000032",
+                            ProductDescription = "",
+                            ProductName = "BLACK LABEL DOUBLE SHOT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 280.0
+                        },
+                        new
+                        {
+                            ProductId = 33,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000033",
+                            ProductDescription = "",
+                            ProductName = "CHIVAS REGAL DOUBLE SHOT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 150.0
+                        },
+                        new
+                        {
+                            ProductId = 34,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000034",
+                            ProductDescription = "",
+                            ProductName = "JACK  DANIELS HALF BOTTLE(MEZO)",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 4800.0
+                        },
+                        new
+                        {
+                            ProductId = 35,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000035",
+                            ProductDescription = "",
+                            ProductName = "OX CAFE",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 4200.0
+                        },
+                        new
+                        {
+                            ProductId = 36,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000036",
+                            ProductDescription = "",
+                            ProductName = "RED LABEL DOUBLE SHAT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 150.0
+                        },
+                        new
+                        {
+                            ProductId = 37,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000037",
+                            ProductDescription = "",
+                            ProductName = "SPECIAL GOLD LABEL WHISKY",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 5000.0
+                        },
+                        new
+                        {
+                            ProductId = 38,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000038",
+                            ProductDescription = "",
+                            ProductName = "STOLICHINYA DOUBLE SHAT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 165.0
+                        },
+                        new
+                        {
+                            ProductId = 39,
+                            Active = false,
+                            Discount = 0.0,
+                            EPT = new TimeOnly(0, 0, 0),
+                            Extras = "",
+                            ImagePath = "",
+                            Ingredients = "",
+                            Orderable = false,
+                            ProductCategory = "ALCOHOLIC BEVERAGES",
+                            ProductCode = "PML-000039",
+                            ProductDescription = "",
+                            ProductName = "WHITE HORSE DOUBLE SHAT",
+                            ProductPoint = 0,
+                            ProductSubCategory = "LIQUOR",
+                            Rating = 5.0,
+                            TotalOrdered = 0,
+                            UnitPrice = 75.0
                         });
                 });
 
@@ -598,29 +1195,29 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "75614951-0742-4ee0-b937-bb56e4158a79",
-                            ConcurrencyStamp = "5ed14b50-936e-4cb1-bc99-8845545d567d",
+                            Id = "091f67cb-1340-4d90-9258-36caab10c1f3",
+                            ConcurrencyStamp = "3c4d809c-1366-42de-9995-507933792732",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "3221126e-0aca-4991-8c3e-091ec1df29bb",
-                            ConcurrencyStamp = "5ac39dc9-1fb8-46eb-801d-8ccc19948ee0",
+                            Id = "d99c1efa-8f99-413e-803c-97aff3be4009",
+                            ConcurrencyStamp = "b05b3715-194a-4fd1-aafb-7e7acef462ef",
                             Name = "Branch Admin",
                             NormalizedName = "BRANCH ADMIN"
                         },
                         new
                         {
-                            Id = "3fda2f02-f303-41c2-a285-b3f7e9ef7a21",
-                            ConcurrencyStamp = "8127e067-83ae-48f4-be3f-07bee1ed5d15",
+                            Id = "ae35553f-e551-4916-b858-9b3ea1a9ae52",
+                            ConcurrencyStamp = "f8efa564-81b4-456d-a1a7-0e2151073890",
                             Name = "System Admin",
                             NormalizedName = "SYSTEM ADMIN"
                         },
                         new
                         {
-                            Id = "5c2ee27a-f157-4758-a8ec-1ef45b801082",
-                            ConcurrencyStamp = "15907dc3-b738-41c5-9fae-35b302136d9b",
+                            Id = "bd6b36df-7c12-4a04-a988-bc3259a3899e",
+                            ConcurrencyStamp = "0ddd249a-0f29-47a2-8458-d861d86ef5d2",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

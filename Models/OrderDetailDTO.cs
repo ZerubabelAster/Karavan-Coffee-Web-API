@@ -12,9 +12,10 @@ namespace KaravanCoffeeWebAPI.Models
         [Required]
         public double UnitPrice { get; set; }
 
-        public string ExtrasRequested { get; set; }
-        public string RemovalRequested { get; set; }
-
+        public string ExtrasRequested { get; set; } //ProductID of the extra product
+        public string RemovalRequested { get; set; } //ingredients to be removed
+        public double ExtraCharge { get; set; }
+        public double Discount { get; set; }
         [Required]
         public double SubTotal { get; set; }
 
@@ -33,9 +34,7 @@ namespace KaravanCoffeeWebAPI.Models
     public class OrderDetailDTO : CreateOrderDetailDTO
     {
         public int OrderDetailId { get; set; }
-
         public OrderDTO Order { get; set; }
         public ProductDTO Product { get; set; }
-
     }
 }
