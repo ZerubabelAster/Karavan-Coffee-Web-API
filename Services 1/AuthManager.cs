@@ -34,8 +34,8 @@ namespace KaravanCoffeeWebAPI.Services
             var expiration = DateTime.Now.AddMinutes(Convert.ToDouble(jwtSetting.GetSection("lifetime").Value));
             
             var token = new JwtSecurityToken(
-                    issuer: jwtSetting.GetSection("Issuer").Value,
-                    audience: jwtSetting.GetSection("Audience").Value,
+                    //issuer: jwtSetting.GetSection("Issuer").Value,
+                    //audience: jwtSetting.GetSection("Audience").Value,
                     claims: claims,
                     expires: expiration,
                     signingCredentials: signingCredentials
@@ -46,16 +46,19 @@ namespace KaravanCoffeeWebAPI.Services
 
         private async Task<List<Claim>> GetClaims()
         {
+            //string role, userName, Email;
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, _person.UserName),
+                //new Claim(ClaimTypes.Name, _person.UserName),
+                new Claim(JwtRegisteredClaimNames.Name, _person.UserName),
+                new Claim(JwtRegisteredClaimNames.Email, _person.UserName),
             };
 
             var roles = await _userManager.GetRolesAsync(_person);
 
-            foreach(var role in roles)
+            foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("role", role));
             }
 
             return claims;

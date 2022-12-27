@@ -23,6 +23,7 @@ namespace KaravanCoffeeWebAPI.Controllers
 
         }
 
+        [Authorize(Roles = "Administrator, Branch Admin, Customer")]
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
@@ -39,6 +40,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator, Branch Admin, Customer")]
         [HttpGet("{id:int}", Name = "GetProduct")]
         public async Task<IActionResult> GetProduct(int id)
         {
@@ -69,7 +71,16 @@ namespace KaravanCoffeeWebAPI.Controllers
 
             try
             {
+                //var path1 = Path.GetFullPath()
+                var path = Path.Combine("C:\\Users\\Administrator\\source\\repos\\Karavan Coffee Web API\\", "Asset/Products/" , productDTO.Image.FileName);
+                productDTO.ImagePath = path;
                 var product = _mapper.Map<Product>(productDTO);
+
+                if (productDTO.Image != null)
+                   product.ImagePath = _unitOfWork.Products.UploadImage(product.Image);
+                else
+                    productDTO.ImagePath = Path.Combine(_environment.WebRootPath + Constant.DefaultProductImagePath + Constant.DefaultProductImage);
+                
                 await _unitOfWork.Products.Insert(product);
                 await _unitOfWork.Save();
 

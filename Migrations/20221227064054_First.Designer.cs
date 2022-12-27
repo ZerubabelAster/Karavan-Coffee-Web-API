@@ -3,6 +3,7 @@ using System;
 using KaravanCoffeeWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KaravanCoffeeWebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221227064054_First")]
+    partial class First
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,27 +307,10 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("double");
 
-                    b.Property<DateTime>("EPT")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Extras")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-<<<<<<< Updated upstream
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Ingredients")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ProductCategory")
-                        .IsRequired()
-=======
                     b.Property<string>("MainIngredients")
->>>>>>> Stashed changes
                         .HasColumnType("longtext");
 
                     b.Property<string>("ProductCode")
@@ -342,15 +328,12 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("double");
 
-<<<<<<< Updated upstream
-=======
                     b.Property<bool>("RequireExtra")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
->>>>>>> Stashed changes
                     b.Property<int>("TotalOrdered")
                         .HasColumnType("int");
 
@@ -372,25 +355,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000001",
                             ProductDescription = "",
                             ProductName = "ANBESA BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 35.0
                         },
@@ -400,25 +373,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000002",
                             ProductDescription = "",
                             ProductName = "ARADA BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 45.0
                         },
@@ -428,25 +391,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000003",
                             ProductDescription = "",
                             ProductName = "BEDELE BEER BIG",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 45.0
                         },
@@ -456,25 +409,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000004",
                             ProductDescription = "",
                             ProductName = "BEDELE BEER SMALL",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -484,25 +427,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000005",
                             ProductDescription = "",
                             ProductName = "CASTLE BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -512,25 +445,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000006",
                             ProductDescription = "",
                             ProductName = "DASHEN BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -540,25 +463,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000007",
                             ProductDescription = "",
                             ProductName = "HABESHA BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -568,25 +481,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000008",
                             ProductDescription = "",
                             ProductName = "HARAR BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -596,25 +499,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000009",
                             ProductDescription = "",
                             ProductName = "HEINEKEN BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 33.0
                         },
@@ -624,25 +517,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000010",
                             ProductDescription = "",
                             ProductName = "MALTA",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -652,25 +535,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000011",
                             ProductDescription = "",
                             ProductName = "SENQ BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -680,25 +553,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 1,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000012",
                             ProductDescription = "",
                             ProductName = "ST GEORGE BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -708,521 +571,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                             Active = false,
                             CategoryId = 2,
                             Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
                             ImagePath = "",
-<<<<<<< Updated upstream
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-=======
                             MainIngredients = "",
->>>>>>> Stashed changes
                             ProductCode = "PML-000013",
                             ProductDescription = "",
                             ProductName = "WALIA BEER",
                             ProductPoint = 0,
                             Rating = 5.0,
-<<<<<<< Updated upstream
-=======
                             RequireExtra = false,
                             SubCategoryId = 1,
->>>>>>> Stashed changes
                             TotalOrdered = 0,
                             UnitPrice = 43.0
-                        },
-                        new
-                        {
-                            ProductId = 14,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000014",
-                            ProductDescription = "",
-                            ProductName = "ACACIA DRY RED WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 480.0
-                        },
-                        new
-                        {
-                            ProductId = 15,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000015",
-                            ProductDescription = "",
-                            ProductName = "ACACIA DRY WHITE WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 480.0
-                        },
-                        new
-                        {
-                            ProductId = 16,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000016",
-                            ProductDescription = "",
-                            ProductName = "ACACIA ROSE WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 480.0
-                        },
-                        new
-                        {
-                            ProductId = 17,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000017",
-                            ProductDescription = "",
-                            ProductName = "ACACIA SWEET RED WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 480.0
-                        },
-                        new
-                        {
-                            ProductId = 18,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000018",
-                            ProductDescription = "",
-                            ProductName = "ACACIA SWEET WHITE WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 480.0
-                        },
-                        new
-                        {
-                            ProductId = 19,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000019",
-                            ProductDescription = "",
-                            ProductName = "AWASH TEKESHINO",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 350.0
-                        },
-                        new
-                        {
-                            ProductId = 20,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000020",
-                            ProductDescription = "",
-                            ProductName = "AWASH WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 250.0
-                        },
-                        new
-                        {
-                            ProductId = 21,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000021",
-                            ProductDescription = "",
-                            ProductName = "AXUMIT RED WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 350.0
-                        },
-                        new
-                        {
-                            ProductId = 22,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000022",
-                            ProductDescription = "",
-                            ProductName = "HENDEKE RED WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 250.0
-                        },
-                        new
-                        {
-                            ProductId = 23,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000023",
-                            ProductDescription = "",
-                            ProductName = "RIFT VALLEY MERLOT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 480.0
-                        },
-                        new
-                        {
-                            ProductId = 24,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000024",
-                            ProductDescription = "",
-                            ProductName = "RIFT VALLEY CHARDONNAY",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 480.0
-                        },
-                        new
-                        {
-                            ProductId = 25,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000025",
-                            ProductDescription = "",
-                            ProductName = "SHEBELE WHITE WINE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 250.0
-                        },
-                        new
-                        {
-                            ProductId = 26,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000026",
-                            ProductDescription = "",
-                            ProductName = "TEJ 1 LITER",
-                            ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED WINE",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 280.0
-                        },
-                        new
-                        {
-                            ProductId = 27,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000027",
-                            ProductDescription = "",
-                            ProductName = "ST.GEORGE JAMBO DRAFT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "DRAFT BEER",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 34.0
-                        },
-                        new
-                        {
-                            ProductId = 28,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000028",
-                            ProductDescription = "",
-                            ProductName = "ST.GEORGE SINGLE DRAFT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "DRAFT BEER",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 23.0
-                        },
-                        new
-                        {
-                            ProductId = 29,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000029",
-                            ProductDescription = "",
-                            ProductName = "WALIA JAMBO DRAFT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "DRAFT BEER",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 34.0
-                        },
-                        new
-                        {
-                            ProductId = 30,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000030",
-                            ProductDescription = "",
-                            ProductName = "WALIA SINGLE DRAFT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "DRAFT BEER",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 23.0
-                        },
-                        new
-                        {
-                            ProductId = 31,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000031",
-                            ProductDescription = "",
-                            ProductName = "ABSOLUTE VODKA HALF BOTTLE(MEZO)",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 1200.0
-                        },
-                        new
-                        {
-                            ProductId = 32,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000032",
-                            ProductDescription = "",
-                            ProductName = "BLACK LABEL DOUBLE SHOT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 280.0
-                        },
-                        new
-                        {
-                            ProductId = 33,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000033",
-                            ProductDescription = "",
-                            ProductName = "CHIVAS REGAL DOUBLE SHOT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 150.0
-                        },
-                        new
-                        {
-                            ProductId = 34,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000034",
-                            ProductDescription = "",
-                            ProductName = "JACK  DANIELS HALF BOTTLE(MEZO)",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 4800.0
-                        },
-                        new
-                        {
-                            ProductId = 35,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000035",
-                            ProductDescription = "",
-                            ProductName = "OX CAFE",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 4200.0
-                        },
-                        new
-                        {
-                            ProductId = 36,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000036",
-                            ProductDescription = "",
-                            ProductName = "RED LABEL DOUBLE SHAT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 150.0
-                        },
-                        new
-                        {
-                            ProductId = 37,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000037",
-                            ProductDescription = "",
-                            ProductName = "SPECIAL GOLD LABEL WHISKY",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 5000.0
-                        },
-                        new
-                        {
-                            ProductId = 38,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000038",
-                            ProductDescription = "",
-                            ProductName = "STOLICHINYA DOUBLE SHAT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 165.0
-                        },
-                        new
-                        {
-                            ProductId = 39,
-                            Active = false,
-                            Discount = 0.0,
-                            EPT = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Extras = "",
-                            ImagePath = "",
-                            Ingredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
-                            ProductCode = "PML-000039",
-                            ProductDescription = "",
-                            ProductName = "WHITE HORSE DOUBLE SHAT",
-                            ProductPoint = 0,
-                            ProductSubCategory = "LIQUOR",
-                            Rating = 5.0,
-                            TotalOrdered = 0,
-                            UnitPrice = 75.0
                         });
                 });
 
@@ -1351,49 +710,29 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasData(
                         new
                         {
-<<<<<<< Updated upstream
-                            Id = "9bb8c73f-ecb9-407d-81bb-e562f6abfc8e",
-                            ConcurrencyStamp = "a5275699-b14f-44f0-bf91-7f804cc62c9e",
-=======
                             Id = "a57af1f5-6f5e-4763-b368-e87aeea8c4dd",
                             ConcurrencyStamp = "885fc768-778e-4bfe-9547-66692298c8d0",
->>>>>>> Stashed changes
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-<<<<<<< Updated upstream
-                            Id = "5abe3177-f509-4584-842c-2bd7d91f6cd3",
-                            ConcurrencyStamp = "6f8f26e7-3e18-4fc0-9b1c-34646286cf05",
-=======
                             Id = "a88f287e-2443-4c97-ad6b-33c055da143d",
                             ConcurrencyStamp = "b972d10c-cbb3-41df-88f8-0ff1eb8195a1",
->>>>>>> Stashed changes
                             Name = "Branch Admin",
                             NormalizedName = "BRANCH ADMIN"
                         },
                         new
                         {
-<<<<<<< Updated upstream
-                            Id = "39c28bc2-b7e5-44a6-8e9c-b9a4868c4859",
-                            ConcurrencyStamp = "df1f247c-62ae-4aa2-9b21-6d80b363f7d8",
-=======
                             Id = "313db217-6e82-4163-9616-4cf7b654da60",
                             ConcurrencyStamp = "8aa161c9-ef11-41a4-929a-b2b2abaa7deb",
->>>>>>> Stashed changes
                             Name = "System Admin",
                             NormalizedName = "SYSTEM ADMIN"
                         },
                         new
                         {
-<<<<<<< Updated upstream
-                            Id = "8c771db2-3931-41e6-b475-25d14790c7e5",
-                            ConcurrencyStamp = "3e3a627c-6034-4d4f-abe3-b5258a1f8670",
-=======
                             Id = "d670507c-559f-40ec-86c3-26d9bd1fa6dc",
                             ConcurrencyStamp = "506388e7-f188-4ffe-ba9b-6b7af87d657c",
->>>>>>> Stashed changes
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

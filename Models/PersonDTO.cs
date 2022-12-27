@@ -1,4 +1,12 @@
+<<<<<<< Updated upstream
 ﻿using System.ComponentModel.DataAnnotations;
+=======
+﻿using AutoMapper.Configuration.Annotations;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
+>>>>>>> Stashed changes
 
 namespace KaravanCoffeeWebAPI.Models
 {
@@ -19,6 +27,7 @@ namespace KaravanCoffeeWebAPI.Models
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Gender { get; set; }
+        public string ImagePath { get; set; }
 
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }

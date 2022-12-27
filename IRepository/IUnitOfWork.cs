@@ -16,6 +16,12 @@ namespace KaravanCoffeeWebAPI.IRepository
 
         IGenericRepository<LoyalityDetail> LoyaltiesDetail { get; }
 
+        IGenericRepository<Category> Categories { get; }
+
+        IGenericRepository<SubCategory> SubCategories { get; }
+
+        IGenericRepository<Gallery> Galleries { get; }
+
         Task Save();
     }
 }

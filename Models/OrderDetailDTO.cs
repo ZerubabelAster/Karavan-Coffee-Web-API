@@ -18,8 +18,7 @@ namespace KaravanCoffeeWebAPI.Models
         [Required]
         public double SubTotal { get; set; }
 
-        [Required]
-        public double Rating { get; set; }
+        public double? Rating { get; set; }
 
         public int OrderId { get; set; }
 

@@ -29,6 +29,13 @@ namespace KaravanCoffeeWebAPI.Configration
             CreateMap<ProductAvailability, ProductAvailabilityDTO>().ReverseMap();
             CreateMap<ProductAvailability, CreateProductAvailabilityDTO>().ReverseMap();
 
+            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Category, CreateCategoryDTO>().ReverseMap();
+
+            CreateMap<SubCategory, SubCategoryDTO>().ReverseMap();
+            CreateMap<SubCategory, CreateSubCategoryDTO>().ReverseMap();
+
+
         }
     }
 }
