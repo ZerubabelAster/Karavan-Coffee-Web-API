@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using KaravanCoffeeWebAPI.Controllers;
+using KaravanCoffeeWebAPI.Services_1;
 
 Log.Logger = new LoggerConfiguration()
 .WriteTo.Console()
@@ -50,6 +51,7 @@ builder.Services.AddDbContext<DatabaseContext>(opt =>
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
+builder.Services.Configure<SMSOptions>(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(MapperInitilizer));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthManager, AuthManager>();

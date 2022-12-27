@@ -58,7 +58,13 @@ namespace KaravanCoffeeWebAPI.Controllers
                 }
 
                 await _userManager.AddToRoleAsync(person, personDTO.Role);
-                return Accepted();
+
+                if (!await _authManager.ValidateUser(personDTO))
+                {
+                    return Unauthorized();
+                }
+
+                return Accepted(new { Token = await _authManager.CreateToken() });
             }
             catch (Exception ex)
             {

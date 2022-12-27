@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper.Configuration.Annotations;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KaravanCoffeeWebAPI.Data
@@ -9,8 +10,6 @@ namespace KaravanCoffeeWebAPI.Data
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
-        public string ProductCategory { get; set; }
-        public string ProductSubCategory { get; set; }
         public double UnitPrice { get; set; }
         public string MainIngredients { get; set; } // Before: Keywords, comma separated
         public bool Active { get; set; }
@@ -23,9 +22,20 @@ namespace KaravanCoffeeWebAPI.Data
         [NotMapped]
         public IFormFile Image { get; set; }
 
-        [HiddenInput]
-        public string? ImagePath { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public string ImagePath { get; set; }
 
+        [ForeignKey(nameof(Category))]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
 
+        [ForeignKey(nameof(SubCategory))]
+        public int SubCategoryId { get; set; }
+        public SubCategory SubCategory { get; set; }
+
+        public static implicit operator string(Product v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

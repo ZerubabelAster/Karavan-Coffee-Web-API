@@ -26,16 +26,71 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BranchAddress")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("BranchName")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("BranchId");
 
                     b.ToTable("Branches");
+                });
+
+            modelBuilder.Entity("KaravanCoffeeWebAPI.Data.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CategoryDescription")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryDescription = "",
+                            CategoryName = "ALCOHOLIC BEVERAGES",
+                            ImagePath = ""
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryDescription = "",
+                            CategoryName = "Cake",
+                            ImagePath = ""
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryDescription = "",
+                            CategoryName = "Bakery",
+                            ImagePath = ""
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            CategoryDescription = "",
+                            CategoryName = "Ice Cream",
+                            ImagePath = ""
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            CategoryDescription = "",
+                            CategoryName = "Habeshan Dish",
+                            ImagePath = ""
+                        });
                 });
 
             modelBuilder.Entity("KaravanCoffeeWebAPI.Data.LoyalityDetail", b =>
@@ -75,33 +130,27 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApprovedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("BranchId")
                         .HasColumnType("int");
 
                     b.Property<string>("DeliveredBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("OrderDateTime")
                         .HasColumnType("datetime");
 
                     b.Property<string>("OrderStatus")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("OrderType")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("OrderedBy")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("PaymentMode")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("PickupDateTime")
@@ -114,7 +163,6 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .HasColumnType("double");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("varchar(95)");
 
                     b.Property<byte>("Void")
@@ -185,15 +233,15 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImagePath")
                         .HasColumnType("longtext");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<bool>("LockoutEnabled")
@@ -250,6 +298,9 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Discount")
                         .HasColumnType("double");
 
@@ -257,37 +308,28 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("MainIngredients")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ProductCategory")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ProductCode")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ProductDescription")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ProductName")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("ProductPoint")
                         .HasColumnType("int");
-
-                    b.Property<string>("ProductSubCategory")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<double>("Rating")
                         .HasColumnType("double");
 
                     b.Property<bool>("RequireExtra")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TotalOrdered")
                         .HasColumnType("int");
@@ -297,6 +339,10 @@ namespace KaravanCoffeeWebAPI.Migrations
 
                     b.HasKey("ProductId");
 
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
@@ -304,17 +350,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 1,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000001",
                             ProductDescription = "",
                             ProductName = "ANBESA BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 35.0
                         },
@@ -322,17 +368,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 2,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000002",
                             ProductDescription = "",
                             ProductName = "ARADA BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 45.0
                         },
@@ -340,17 +386,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 3,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000003",
                             ProductDescription = "",
                             ProductName = "BEDELE BEER BIG",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 45.0
                         },
@@ -358,17 +404,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 4,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000004",
                             ProductDescription = "",
                             ProductName = "BEDELE BEER SMALL",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -376,17 +422,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 5,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000005",
                             ProductDescription = "",
                             ProductName = "CASTLE BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -394,17 +440,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 6,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000006",
                             ProductDescription = "",
                             ProductName = "DASHEN BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -412,17 +458,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 7,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000007",
                             ProductDescription = "",
                             ProductName = "HABESHA BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -430,17 +476,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 8,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000008",
                             ProductDescription = "",
                             ProductName = "HARAR BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -448,17 +494,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 9,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000009",
                             ProductDescription = "",
                             ProductName = "HEINEKEN BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 33.0
                         },
@@ -466,17 +512,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 10,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000010",
                             ProductDescription = "",
                             ProductName = "MALTA",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -484,17 +530,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 11,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000011",
                             ProductDescription = "",
                             ProductName = "SENQ BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -502,17 +548,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 12,
                             Active = false,
+                            CategoryId = 1,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000012",
                             ProductDescription = "",
                             ProductName = "ST GEORGE BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         },
@@ -520,17 +566,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                         {
                             ProductId = 13,
                             Active = false,
+                            CategoryId = 2,
                             Discount = 0.0,
                             ImagePath = "",
                             MainIngredients = "",
-                            ProductCategory = "ALCOHOLIC BEVERAGES",
                             ProductCode = "PML-000013",
                             ProductDescription = "",
                             ProductName = "WALIA BEER",
                             ProductPoint = 0,
-                            ProductSubCategory = "BOTTLED BEER",
                             Rating = 5.0,
                             RequireExtra = false,
+                            SubCategoryId = 1,
                             TotalOrdered = 0,
                             UnitPrice = 43.0
                         });
@@ -566,6 +612,73 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.ToTable("ProductAvailability");
                 });
 
+            modelBuilder.Entity("KaravanCoffeeWebAPI.Data.SubCategory", b =>
+                {
+                    b.Property<int>("SubCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("SubCategoryDescription")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("SubCategoryName")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("SubCategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("SubCategory");
+
+                    b.HasData(
+                        new
+                        {
+                            SubCategoryId = 1,
+                            CategoryId = 1,
+                            ImagePath = "",
+                            SubCategoryDescription = "",
+                            SubCategoryName = "ALCOHOLIC BEVERAGES"
+                        },
+                        new
+                        {
+                            SubCategoryId = 2,
+                            CategoryId = 1,
+                            ImagePath = "",
+                            SubCategoryDescription = "",
+                            SubCategoryName = "Cake"
+                        },
+                        new
+                        {
+                            SubCategoryId = 3,
+                            CategoryId = 1,
+                            ImagePath = "",
+                            SubCategoryDescription = "",
+                            SubCategoryName = "Bakery"
+                        },
+                        new
+                        {
+                            SubCategoryId = 4,
+                            CategoryId = 1,
+                            ImagePath = "",
+                            SubCategoryDescription = "",
+                            SubCategoryName = "Ice Cream"
+                        },
+                        new
+                        {
+                            SubCategoryId = 5,
+                            CategoryId = 1,
+                            ImagePath = "",
+                            SubCategoryDescription = "",
+                            SubCategoryName = "Habeshan Dish"
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -594,29 +707,29 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7231ce0b-7d7f-43cb-95f1-e814711e71c8",
-                            ConcurrencyStamp = "31be6789-f03b-4561-b86f-d16aa247298a",
+                            Id = "a57af1f5-6f5e-4763-b368-e87aeea8c4dd",
+                            ConcurrencyStamp = "885fc768-778e-4bfe-9547-66692298c8d0",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "18fb115f-a8ba-4f66-a090-a86aa012d6ea",
-                            ConcurrencyStamp = "04f3a2f4-1056-430f-9910-f95e521f0d15",
+                            Id = "a88f287e-2443-4c97-ad6b-33c055da143d",
+                            ConcurrencyStamp = "b972d10c-cbb3-41df-88f8-0ff1eb8195a1",
                             Name = "Branch Admin",
                             NormalizedName = "BRANCH ADMIN"
                         },
                         new
                         {
-                            Id = "24765097-8ee5-49d6-a98d-290383b0f563",
-                            ConcurrencyStamp = "b779c006-c61d-4c86-9572-ded562582858",
+                            Id = "313db217-6e82-4163-9616-4cf7b654da60",
+                            ConcurrencyStamp = "8aa161c9-ef11-41a4-929a-b2b2abaa7deb",
                             Name = "System Admin",
                             NormalizedName = "SYSTEM ADMIN"
                         },
                         new
                         {
-                            Id = "08d2c838-ecb2-45af-9d7e-0f40bf0a4d45",
-                            ConcurrencyStamp = "a223c7e9-0d44-4f2f-b5d7-38f2dac2429e",
+                            Id = "d670507c-559f-40ec-86c3-26d9bd1fa6dc",
+                            ConcurrencyStamp = "506388e7-f188-4ffe-ba9b-6b7af87d657c",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -753,9 +866,7 @@ namespace KaravanCoffeeWebAPI.Migrations
 
                     b.HasOne("KaravanCoffeeWebAPI.Data.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Branch");
 
@@ -781,6 +892,25 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("KaravanCoffeeWebAPI.Data.Product", b =>
+                {
+                    b.HasOne("KaravanCoffeeWebAPI.Data.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KaravanCoffeeWebAPI.Data.SubCategory", "SubCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+                });
+
             modelBuilder.Entity("KaravanCoffeeWebAPI.Data.ProductAvailability", b =>
                 {
                     b.HasOne("KaravanCoffeeWebAPI.Data.Branch", "Branch")
@@ -798,6 +928,17 @@ namespace KaravanCoffeeWebAPI.Migrations
                     b.Navigation("Branch");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("KaravanCoffeeWebAPI.Data.SubCategory", b =>
+                {
+                    b.HasOne("KaravanCoffeeWebAPI.Data.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -849,6 +990,16 @@ namespace KaravanCoffeeWebAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("KaravanCoffeeWebAPI.Data.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("KaravanCoffeeWebAPI.Data.SubCategory", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

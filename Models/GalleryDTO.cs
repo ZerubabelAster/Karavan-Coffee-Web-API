@@ -1,5 +1,10 @@
-﻿using Microsoft.Build.Framework;
+﻿using AutoMapper.Configuration.Annotations;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using Xunit;
+using Xunit.Sdk;
 
 namespace KaravanCoffeeWebAPI.Models
 {
@@ -19,6 +24,10 @@ namespace KaravanCoffeeWebAPI.Models
         [Required]
         [StringLength(int.MaxValue)]
         public string ImagePath { get; set; }
+    }
+
+    public class UpdateGalleryDTO : CreateGalleryDTO
+    {
     }
 
     public class GalleryDTO : CreateGalleryDTO

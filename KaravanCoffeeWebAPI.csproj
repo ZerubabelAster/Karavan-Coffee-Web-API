@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>893d6a61-b7b1-47d2-9123-02031f9612b6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +36,7 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0-alpha.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Twilio" Version="6.2.0" />
     <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.4.2" />
   </ItemGroup>
@@ -42,7 +44,6 @@
   <ItemGroup>
     <Folder Include="Asset\Avatars\" />
     <Folder Include="Asset\Galleries\" />
-    <Folder Include="Asset\Products\" />
     <Folder Include="logs\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

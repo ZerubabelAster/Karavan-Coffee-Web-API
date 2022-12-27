@@ -10,5 +10,6 @@ namespace KaravanCoffeeWebAPI.Data
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Gender { get; set; }
+        public string ImagePath { get; set; }
     }
 }
