@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using KaravanCoffeeWebAPI.Data;
 
 namespace KaravanCoffeeWebAPI.Models
 {
@@ -14,7 +13,7 @@ namespace KaravanCoffeeWebAPI.Models
         [StringLength(50, ErrorMessage = "Branch Address Name is too long.")]
         public string BranchAddress { get; set; }
     }
-    
+
     public class UpdateBranchDTO : CreateBranchDTO
     {
 

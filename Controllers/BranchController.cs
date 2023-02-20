@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
+using CoreApiResponse;
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KaravanCoffeeWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BranchController : ControllerBase
+    public class BranchController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<BranchController> _logger;
@@ -19,7 +19,7 @@ namespace KaravanCoffeeWebAPI.Controllers
         public BranchController(IUnitOfWork unitOfWork, ILogger<BranchController> logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;   
+            _logger = logger;
             _mapper = mapper;
 
         }
@@ -32,12 +32,20 @@ namespace KaravanCoffeeWebAPI.Controllers
             {
                 var branches = await _unitOfWork.Branches.GetAll();
                 var results = _mapper.Map<List<BranchDTO>>(branches);
-                return Ok(results);
+                if (results.Count > 0)
+                {
+                    return CustomResult("Branch Loaded Successfully", results);
+                }
+                else
+                    return CustomResult("Branch Not Found", System.Net.HttpStatusCode.NotFound);
+
+                //return Ok(results);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetBranches)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
+                return CustomResult("Internal Server Error", System.Net.HttpStatusCode.InternalServerError);
+                //return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
             }
         }
 
@@ -49,12 +57,16 @@ namespace KaravanCoffeeWebAPI.Controllers
             {
                 var branch = await _unitOfWork.Branches.Get(q => q.BranchId == id);
                 var result = _mapper.Map<BranchDTO>(branch);
-                return Ok(result);
+                return CustomResult($"The Branch request is OK.", result, System.Net.HttpStatusCode.OK);
+
+                //return Ok(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetBranch)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetBranch)}", System.Net.HttpStatusCode.InternalServerError);
+
+                //return StatusCode(500, "Internal Server Error. Please Try Again Later.");
             }
         }
 
@@ -68,7 +80,9 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateBranch)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Post Attempt {nameof(CreateBranch)}", System.Net.HttpStatusCode.BadRequest);
+
+                //return BadRequest(ModelState);
             }
 
             try
@@ -76,13 +90,14 @@ namespace KaravanCoffeeWebAPI.Controllers
                 var branch = _mapper.Map<Branch>(branchDTO);
                 await _unitOfWork.Branches.Insert(branch);
                 await _unitOfWork.Save();
+                return CustomResult("Product Created Successfully", System.Net.HttpStatusCode.Created);
 
-                return StatusCode(201, "Branch Created Successfully");
+                //return StatusCode(201, "Branch Created Successfully");
             }
             catch (Exception)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateBranch)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult($"Something Went Wrong in the {nameof(CreateBranch)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -93,7 +108,7 @@ namespace KaravanCoffeeWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateBranch(int id, [FromBody] UpdateBranchDTO updateBranchDTO)
         {
-            if(!ModelState.IsValid || id < 1)
+            if (!ModelState.IsValid || id < 1)
             {
                 _logger.LogError($"Invalid Update Attempt in {nameof(UpdateBranch)}");
                 return BadRequest(ModelState);
@@ -102,22 +117,23 @@ namespace KaravanCoffeeWebAPI.Controllers
             try
             {
                 var branch = await _unitOfWork.Branches.Get(q => q.BranchId == id);
-                if( branch == null)
+                if (branch == null)
                 {
                     _logger.LogError($"Invalid Update Attempt in {nameof(UpdateBranch)}");
-                    return BadRequest("submitted data is invalid");
+                    return CustomResult($"Invalid Update Attempt in {nameof(UpdateBranch)}", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 _mapper.Map(updateBranchDTO, branch);
                 _unitOfWork.Branches.Update(branch);
                 await _unitOfWork.Save();
+                return CustomResult("Updated Successfully", System.Net.HttpStatusCode.NoContent);
 
-                return NoContent();
+                //return NoContent();
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Someting Went Wrong in the {nameof(UpdateBranch)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Something Went Wrong in the {nameof(UpdateBranch)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -131,7 +147,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (id < 1)
             {
                 _logger.LogError($"Invalid Delete attemp in {nameof(DeleteBranch)}");
-                return BadRequest();
+                return CustomResult($"Invalid Delete attempt in {nameof(DeleteBranch)}");
             }
 
             try
@@ -140,18 +156,18 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (branch == null)
                 {
                     _logger.LogError($"Invalid Delete attemp in {nameof(DeleteBranch)}");
-                    return BadRequest("Submitted data is invalid");
+                    return CustomResult($"Invlaid Delte attempt in {nameof(DeleteBranch)}", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 await _unitOfWork.Branches.Delete(id);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Deleted Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Something Went Wrong in the {nameof(DeleteBranch)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult("Internal Server Error. Please Try Again Later", System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }

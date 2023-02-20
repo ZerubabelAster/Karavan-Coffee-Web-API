@@ -10,7 +10,13 @@ namespace KaravanCoffeeWebAPI
     {
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentityCore<Person>(q => q.User.RequireUniqueEmail = true);
+            var builder = services.AddIdentityCore<Person>(q =>
+            {
+                q.User.RequireUniqueEmail = false;
+                q.Password.RequireNonAlphanumeric = false;
+                q.Password.RequireUppercase = false;
+                q.Password.RequireDigit = false;
+            });
 
             builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), services);
             builder.AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
@@ -39,7 +45,7 @@ namespace KaravanCoffeeWebAPI
                     ValidAudience = Configuration["Jwt:Audience"],
                     IssuerSigningKey = key /*new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))*/
                 };
-            }); 
+            });
         }
     }
 }

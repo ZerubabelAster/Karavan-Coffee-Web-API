@@ -7,7 +7,7 @@ namespace KaravanCoffeeWebAPI.IRepository
     {
         Task<IList<T>> GetAll(
             Expression<Func<T, bool>> expression = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            /*Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,*/
             List<string> includes = null
             );
 
@@ -15,10 +15,10 @@ namespace KaravanCoffeeWebAPI.IRepository
         Task Insert(T entity);
         Task InsertRange(IEnumerable<T> entities);
         Task Delete(int id);
-        Task SaveImage(IFormFile image,string path);
+        Task SaveImage(IFormFile image, string path);
         void DeleteRange(IEnumerable<T> entities);
         void Update(T entity);
 
-        string UploadImage(IFormFile image);
+        string UploadImage(IFormFile image, string path);
     }
 }

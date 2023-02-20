@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
+using CoreApiResponse;
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
+using System.ComponentModel;
 
 namespace KaravanCoffeeWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProductController> _logger;
@@ -35,12 +35,14 @@ namespace KaravanCoffeeWebAPI.Controllers
             {
                 var products = await _unitOfWork.Products.GetAll();
                 var results = _mapper.Map<List<ProductDTO>>(products);
-                return Ok(results);
+                return CustomResult("Product Loaded Succssfully", results, System.Net.HttpStatusCode.OK);
+                //return Ok(results);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetProducts)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetProducts)}", System.Net.HttpStatusCode.InternalServerError);
+                //return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
             }
         }
 
@@ -52,12 +54,14 @@ namespace KaravanCoffeeWebAPI.Controllers
             {
                 var product = await _unitOfWork.Products.Get(q => q.ProductId == id);
                 var result = _mapper.Map<ProductDTO>(product);
-                return Ok(result);
+                return CustomResult($"Product Loaded Succfully", result, System.Net.HttpStatusCode.OK);
+                //return Ok(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetProduct)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetProduct)}", System.Net.HttpStatusCode.InternalServerError);
+                //return StatusCode(500, "Internal Server Error. Please Try Again Later.");
             }
         }
 
@@ -71,7 +75,8 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateProduct)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Post Attempt {nameof(CreateProduct)}", System.Net.HttpStatusCode.BadRequest);
+                //return BadRequest(ModelState);
             }
 
             try
@@ -81,19 +86,20 @@ namespace KaravanCoffeeWebAPI.Controllers
                 var product = _mapper.Map<Product>(productDTO);
 
                 if (productDTO.Image != null)
-                   product.ImagePath = _unitOfWork.Products.UploadImage(product.Image);
+                    product.ImagePath = Constant.DefalutProductImagepathURL + _unitOfWork.Products.UploadImage(productDTO.Image, Constant.DefaultProductImagePath);
                 else
-                    productDTO.ImagePath = Path.Combine(_environment.WebRootPath + Constant.DefaultProductImagePath + Constant.DefaultProductImage);
-                
+                    product.ImagePath = Constant.DefaultProductImage;
+
                 await _unitOfWork.Products.Insert(product);
                 await _unitOfWork.Save();
-
-                return StatusCode(201, "Product Created Successfully");
+                return CustomResult("Product Created Successfully", System.Net.HttpStatusCode.Created);
+                //return StatusCode(201, "Product Created Successfully");
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateProduct)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult($"Something Went Wrong in the {nameof(CreateProduct)}", System.Net.HttpStatusCode.InternalServerError);
+                //return StatusCode(500, "Internal Server Error. Please Try Again Later");
             }
         }
 
@@ -102,33 +108,45 @@ namespace KaravanCoffeeWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductDTO updateProductDTO)
+        public async Task<IActionResult> UpdateProduct(int id, [FromForm] UpdateProductDTO updateProductDTO)
         {
             if (!ModelState.IsValid || id < 1)
             {
                 _logger.LogError($"Invalid Update Attempt in {nameof(UpdateProduct)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Update Attempt in {nameof(UpdateProduct)}",System.Net.HttpStatusCode.BadRequest);
+
+                //return BadRequest(ModelState);
             }
 
             try
             {
+
                 var updateProduct = await _unitOfWork.Products.Get(q => q.ProductId == id);
+
+        
                 if (updateProduct == null)
                 {
                     _logger.LogError($"Invalid Update Attempt in {nameof(UpdateProduct)}");
-                    return BadRequest("submitted data is invalid"); 
+                    return CustomResult("Submitted data is invalid", System.Net.HttpStatusCode.BadRequest);
+                    //return BadRequest("submitted data is invalid");
                 }
+                if (updateProduct.ImagePath != null)
+                    updateProductDTO.ImagePath = updateProduct.ImagePath;
 
                 _mapper.Map(updateProductDTO, updateProduct);
+                if (updateProductDTO.Image != null)
+                    updateProduct.ImagePath = Constant.DefalutProductImagepathURL + _unitOfWork.Products.UploadImage(updateProductDTO.Image, Constant.DefaultProductImagePath);
+                
                 _unitOfWork.Products.Update(updateProduct);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Updated Successfully", System.Net.HttpStatusCode.NoContent);
+                //return NoContent();
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Someting Went Wrong in the {nameof(UpdateProduct)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Something Went Wrong in the {nameof(UpdateProduct)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -141,8 +159,9 @@ namespace KaravanCoffeeWebAPI.Controllers
         {
             if (id < 1)
             {
-                _logger.LogError($"Invalid Delete attemp in {nameof(DeleteProduct)}");
-                return BadRequest();
+                _logger.LogError($"Invalid Delete attempt in {nameof(DeleteProduct)}");
+                return CustomResult($"Invalid Delete attempt in {nameof(DeleteProduct)}");
+                //return BadRequest();
             }
 
             try
@@ -151,18 +170,21 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (product == null)
                 {
                     _logger.LogError($"Invalid Delete attemp in {nameof(DeleteProduct)}");
-                    return BadRequest("Submitted data is invalid");
+                    return CustomResult($"Invlaid Delete attempt in {nameof(DeleteProduct)}",System.Net.HttpStatusCode.BadRequest);
+                    //return BadRequest("Submitted data is invalid");
                 }
 
                 await _unitOfWork.Products.Delete(id);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Deleted Successfully", System.Net.HttpStatusCode.NoContent);
+                //return NoContent();
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Something Went Wrong in the {nameof(DeleteProduct)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult("Internal Server Error. Please Try Again Later", System.Net.HttpStatusCode.InternalServerError);
+                //return StatusCode(500, "Internal Server Error. Please Try Again Later");
             }
         }
     }

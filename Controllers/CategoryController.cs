@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
+using CoreApiResponse;
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 
 namespace KaravanCoffeeWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<CategoryController> _logger;
@@ -34,14 +33,17 @@ namespace KaravanCoffeeWebAPI.Controllers
         {
             try
             {
-                var categories = await _unitOfWork.Categories.GetAll();
+                var categories = await _unitOfWork.Categories.GetAll(null, new List<string> {"subCategories", "products"});
                 var results = _mapper.Map<List<CategoryDTO>>(categories);
-                return Ok(results);
+                return CustomResult("Category Loaded Succssfully", results, System.Net.HttpStatusCode.OK);
+
+                //return Ok(results);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetCategories)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetCategories)}", System.Net.HttpStatusCode.InternalServerError);
+                //return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
             }
         }
 
@@ -51,14 +53,17 @@ namespace KaravanCoffeeWebAPI.Controllers
         {
             try
             {
-                var category = await _unitOfWork.Categories.Get(q => q.CategoryId == id, include: q => q.Include(x => x.Products));
+                var category = await _unitOfWork.Categories.Get(q => q.CategoryId == id, include: q => q.Include(x => x.products));
                 var result = _mapper.Map<CategoryDTO>(category);
-                return Ok(result);
+                return CustomResult($"Category Loaded Succfully", result, System.Net.HttpStatusCode.OK);
+                //return Ok(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetCategory)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetCategory)}", System.Net.HttpStatusCode.InternalServerError);
+
+                //return StatusCode(500, "Internal Server Error. Please Try Again Later.");
             }
         }
 
@@ -72,7 +77,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateCategory)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Post Attempt {nameof(CreateCategory)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
@@ -82,21 +87,21 @@ namespace KaravanCoffeeWebAPI.Controllers
                 var category = _mapper.Map<Category>(categoryDTO);
 
                 if (categoryDTO.Image != null)
-                    category.ImagePath = _unitOfWork.Categories.UploadImage(category.Image);
+                    category.ImagePath = Constant.DefalutProductImagepathURL + _unitOfWork.Categories.UploadImage(categoryDTO.Image, Constant.DefaultProductImage);
                 else
-                    categoryDTO.ImagePath = Path.Combine(_environment.WebRootPath + Constant.DefaultProductImagePath + Constant.DefaultProductImage);
+                    category.ImagePath = Constant.DefaultProductImage;
 
 
                 await _unitOfWork.Categories.Insert(category);
                 //await _unitOfWork.Categories.UploadImage(category.Image);
                 await _unitOfWork.Save();
 
-                return StatusCode(201, "Category Created Successfully");
+                return CustomResult("Category Created Successfully", System.Net.HttpStatusCode.Created);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateCategory)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult($"Something Went Wrong in the {nameof(CreateCategory)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -110,7 +115,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (!ModelState.IsValid || id < 1)
             {
                 _logger.LogError($"Invalid Update Attempt in {nameof(UpdateCategory)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Update Attempt in {nameof(UpdateCategory)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
@@ -119,19 +124,19 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (updateCategory == null)
                 {
                     _logger.LogError($"Invalid Update Attempt in {nameof(UpdateCategory)}");
-                    return BadRequest("submitted data is invalid");
+                    return CustomResult("Submitted data is invalid", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 _mapper.Map(updateCategoryDTO, updateCategory);
                 _unitOfWork.Categories.Update(updateCategory);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Updated Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Someting Went Wrong in the {nameof(UpdateCategory)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Something Went Wrong in the {nameof(UpdateCategory)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -145,7 +150,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (id < 1)
             {
                 _logger.LogError($"Invalid Delete attemp in {nameof(DeleteCategory)}");
-                return BadRequest();
+                return CustomResult($"Invalid Delete attempt in {nameof(DeleteCategory)}");
             }
 
             try
@@ -154,18 +159,18 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (category == null)
                 {
                     _logger.LogError($"Invalid Delete attemp in {nameof(DeleteCategory)}");
-                    return BadRequest("Submitted data is invalid");
+                    return CustomResult($"Invlaid Delte attempt in {nameof(DeleteCategory)}", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 await _unitOfWork.Categories.Delete(id);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Deleted Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Something Went Wrong in the {nameof(DeleteCategory)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult("Internal Server Error. Please Try Again Later", System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }

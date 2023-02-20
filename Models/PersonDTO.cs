@@ -1,11 +1,17 @@
-﻿using AutoMapper.Configuration.Annotations;
-using System.ComponentModel;
+﻿using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 
 namespace KaravanCoffeeWebAPI.Models
 {
+    public class LoginByPhonePersonDTO
+    {
+        [Required]
+        public string PhoneOREmail { get; set; }
+
+        [Required]
+        [StringLength(15, ErrorMessage = "Your Password is limited to {2} to {1} characters", MinimumLength = 6)]
+        public string? Password { get; set; }
+    }
     public class LoginPersonDTO
     {
         [Required]
@@ -13,23 +19,26 @@ namespace KaravanCoffeeWebAPI.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(15, ErrorMessage = "Your Password is limited to {2} to {1} characters", MinimumLength = 6)]
         public string? Password { get; set; }
     }
+    public class UpdatePersonDTO : PersonDTO
+    {
 
+    }
     public class PersonDTO : LoginPersonDTO
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string FullName { get; set; }
+
+        public DateTime? BirthDate { get; set; }
         public string Gender { get; set; }
+
+        public IFormFile Image { get; set; }
         public string ImagePath { get; set; }
 
-        [DataType(DataType.PhoneNumber)]
+        [Required]
+        [RegularExpression(@"^\+(?:[0-9]●?){6,14}[0-9]$", ErrorMessage = "Phone number is not valid.")]
         public string PhoneNumber { get; set; }
 
-        [Required]
-        [DefaultValue("Customer")]
         public string Role { get; set; }
     }
 }

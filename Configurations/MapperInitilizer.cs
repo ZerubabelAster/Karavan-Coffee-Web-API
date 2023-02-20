@@ -9,7 +9,7 @@ namespace KaravanCoffeeWebAPI.Configration
         public MapperInitilizer()
         {
             CreateMap<Person, PersonDTO>().ReverseMap();
-            /*CreateMap<Person, PersonDTO>().ReverseMap();*/ 
+            /*CreateMap<Person, PersonDTO>().ReverseMap();*/
 
             CreateMap<Branch, BranchDTO>().ReverseMap();
             CreateMap<Branch, CreateBranchDTO>().ReverseMap();
@@ -35,7 +35,11 @@ namespace KaravanCoffeeWebAPI.Configration
             CreateMap<SubCategory, SubCategoryDTO>().ReverseMap();
             CreateMap<SubCategory, CreateSubCategoryDTO>().ReverseMap();
 
+            CreateMap<Gallery, GalleryDTO>().ReverseMap();
+            CreateMap<Gallery, CreateGalleryDTO>().ReverseMap();
 
+            CreateMap<Ingredient, IngredientDTO>().ReverseMap();
+            CreateMap<Ingredient, CreateIngredientDTO>().ReverseMap();
         }
     }
 }

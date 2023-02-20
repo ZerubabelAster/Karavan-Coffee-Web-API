@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
+using CoreApiResponse;
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KaravanCoffeeWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductAvailabilityController : ControllerBase
+    public class ProductAvailabilityController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProductAvailabilityController> _logger;
@@ -30,28 +30,28 @@ namespace KaravanCoffeeWebAPI.Controllers
             {
                 var productAvailabilities = await _unitOfWork.ProductAvailabilities.GetAll();
                 var results = _mapper.Map<List<ProductAvailabilityDTO>>(productAvailabilities);
-                return Ok(results);
+                return CustomResult("Product Availability Loaded Succssfully", results, System.Net.HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetProductsAvailability)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetProductsAvailability)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
         [HttpGet("{branchId:int}/{productId:int}", Name = "GetProductsAvailability")]
-        public async Task<IActionResult> GetProductsAvailability(int branchId, int productId)
+        public async Task<IActionResult> GetProductAvailability(int branchId, int productId)
         {
             try
             {
                 var productAvailability = await _unitOfWork.ProductAvailabilities.Get(q => q.BranchId == branchId/* && q.ProductId == productId*/ );
                 var result = _mapper.Map<ProductAvailabilityDTO>(productAvailability);
-                return Ok(result);
+                return CustomResult($"Product Availability Loaded Succfully", result, System.Net.HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetProductsAvailability)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later.");
+                _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetProductAvailability)}");
+                return CustomResult($"Something Went Wrong in the {nameof(CreateProductAvailability)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -64,7 +64,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateProductAvailability)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Post Attempt {nameof(CreateProductAvailability)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
@@ -73,12 +73,14 @@ namespace KaravanCoffeeWebAPI.Controllers
                 await _unitOfWork.ProductAvailabilities.Insert(productAvailability);
                 await _unitOfWork.Save();
 
-                return CreatedAtRoute("GetOrder", new { id = productAvailability.BranchId/*, productAvailability.ProductId*/ }, productAvailability);
+                return CustomResult("Product Availability Created Successfully", System.Net.HttpStatusCode.Created);
+
+                //return CreatedAtRoute("GetOrder", new { id = productAvailability.BranchId/*, productAvailability.ProductId*/ }, productAvailability);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateProductAvailability)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult($"Something Went Wrong in the {nameof(CreateProductAvailability)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -91,28 +93,28 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (!ModelState.IsValid || id < 1)
             {
                 _logger.LogError($"Invalid Update Attempt in {nameof(UpdateProductAvailability)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Update Attempt in {nameof(UpdateProductAvailability)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
             {
-                var productAvailability = await _unitOfWork.ProductAvailabilities.Get(q =>  q.ProductAvailabilityId == id );
+                var productAvailability = await _unitOfWork.ProductAvailabilities.Get(q => q.ProductAvailabilityId == id);
                 if (productAvailability == null)
                 {
                     _logger.LogError($"Invalid Update Attempt in {nameof(UpdateProductAvailability)}");
-                    return BadRequest("submitted data is invalid");
+                    return CustomResult("Submitted data is invalid", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 _mapper.Map(updateProductAvailabilityDTO, productAvailability);
                 _unitOfWork.ProductAvailabilities.Update(productAvailability);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Updated Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Someting Went Wrong in the {nameof(UpdateProductAvailability)}");
-                return BadRequest(ModelState);
+                return CustomResult("Internal Server Error. Please Try Again Later", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -125,7 +127,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (id < 1)
             {
                 _logger.LogError($"Invalid Delete attemp in {nameof(DeleteProductAvailability)}");
-                return BadRequest();
+                return CustomResult($"Invlaid Delete attempt in {nameof(DeleteProductAvailability)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
@@ -134,18 +136,18 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (prodctAvailabilityies == null)
                 {
                     _logger.LogError($"Invalid Delete attemp in {nameof(DeleteProductAvailability)}");
-                    return BadRequest("Submitted data is invalid");
+                    return CustomResult($"Invlaid Delete attempt in {nameof(DeleteProductAvailability)}", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 await _unitOfWork.ProductAvailabilities.Delete(id);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Deleted Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Something Went Wrong in the {nameof(DeleteProductAvailability)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult("Internal Server Error. Please Try Again Later", System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }

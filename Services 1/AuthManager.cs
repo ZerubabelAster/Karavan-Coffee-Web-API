@@ -1,6 +1,6 @@
 ﻿using KaravanCoffeeWebAPI.Data;
-using KaravanCoffeeWebAPI.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -32,7 +32,7 @@ namespace KaravanCoffeeWebAPI.Services
         {
             var jwtSetting = _configuration.GetSection("Jwt");
             var expiration = DateTime.Now.AddMinutes(Convert.ToDouble(jwtSetting.GetSection("lifetime").Value));
-            
+
             var token = new JwtSecurityToken(
                     //issuer: jwtSetting.GetSection("Issuer").Value,
                     //audience: jwtSetting.GetSection("Audience").Value,
@@ -41,7 +41,7 @@ namespace KaravanCoffeeWebAPI.Services
                     signingCredentials: signingCredentials
                 );
 
-            return token; 
+            return token;
         }
 
         private async Task<List<Claim>> GetClaims()
@@ -50,8 +50,9 @@ namespace KaravanCoffeeWebAPI.Services
             var claims = new List<Claim>
             {
                 //new Claim(ClaimTypes.Name, _person.UserName),
-                new Claim(JwtRegisteredClaimNames.Name, _person.UserName),
+                new Claim(JwtRegisteredClaimNames.Name, _person.FullName),
                 new Claim(JwtRegisteredClaimNames.Email, _person.UserName),
+                new Claim(JwtRegisteredClaimNames.UniqueName, _person.UserName),
             };
 
             var roles = await _userManager.GetRolesAsync(_person);
@@ -78,10 +79,34 @@ namespace KaravanCoffeeWebAPI.Services
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public async Task<bool> ValidateUser(LoginPersonDTO loginPersonDTO)
+        public async Task<bool> ValidateUser(string PhoneOREmail, string password)
         {
-            _person = await _userManager.FindByNameAsync(loginPersonDTO.Email); 
-            return (_person != null && await _userManager.CheckPasswordAsync(_person, loginPersonDTO.Password));
+            var username = PhoneOREmail;
+            if (username.Contains("@"))
+            {
+                _person = await _userManager.FindByEmailAsync(PhoneOREmail);
+                return (_person != null && await _userManager.CheckPasswordAsync(_person, password));
+            }
+            else
+            {
+                _person = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == PhoneOREmail);
+                return (_person != null && await _userManager.CheckPasswordAsync(_person, password));
+            }
+
+        }
+
+        public async Task<bool> IsUserRegistered(string PhoneOREmail)
+        {
+            var username = PhoneOREmail;
+            if (username.Contains("@"))
+            {
+                return await _userManager.FindByEmailAsync(PhoneOREmail) != null;
+            }
+            else
+            {
+                return await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == PhoneOREmail) != null;
+            }
+
         }
     }
 }

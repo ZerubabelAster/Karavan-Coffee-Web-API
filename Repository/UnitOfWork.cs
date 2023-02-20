@@ -16,6 +16,8 @@ namespace KaravanCoffeeWebAPI.Repository
         IGenericRepository<Category> _categories;
         IGenericRepository<SubCategory> _subCategories;
         IGenericRepository<Gallery> _galleries;
+        IGenericRepository<Ingredient> _ingredients;
+        IGenericRepository<Person> _persons;
 
         public UnitOfWork(DatabaseContext context, IWebHostEnvironment webHostEnvironment)
         {
@@ -39,6 +41,10 @@ namespace KaravanCoffeeWebAPI.Repository
         public IGenericRepository<SubCategory> SubCategories => _subCategories ??= new GenericRepository<SubCategory>(_context, _webHostEnvironment);
 
         public IGenericRepository<Gallery> Galleries => _galleries ??= new GenericRepository<Gallery>(_context, _webHostEnvironment);
+
+        public IGenericRepository<Ingredient> Ingredients => _ingredients ??= new GenericRepository<Ingredient>(_context, _webHostEnvironment);
+
+        public IGenericRepository<Person> Persons => _persons ??= new GenericRepository<Person>(_context, _webHostEnvironment);
 
         public void Dispose()
         {

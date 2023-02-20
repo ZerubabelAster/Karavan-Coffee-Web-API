@@ -30,8 +30,8 @@ namespace KaravanCoffeeWebAPI.Models
     public class SubCategoryDTO : CreateSubCategoryDTO
     {
         public int SubCategoryId { get; set; }
-        public Category Category { get; set; }
+        //public Category Category { get; set; }
 
-        public IList<ProductDTO> Products { get; set; }
+        public IList<ProductDTO> products { get; set; }
     }
 }

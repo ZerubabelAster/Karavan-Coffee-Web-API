@@ -1,10 +1,4 @@
-﻿using AutoMapper.Configuration.Annotations;
-using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
-using Xunit;
-using Xunit.Sdk;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KaravanCoffeeWebAPI.Models
 {
@@ -21,7 +15,6 @@ namespace KaravanCoffeeWebAPI.Models
         [Required]
         public IFormFile Image { get; set; }
 
-        [Required]
         [StringLength(int.MaxValue)]
         public string ImagePath { get; set; }
     }

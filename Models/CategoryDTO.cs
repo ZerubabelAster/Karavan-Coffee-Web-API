@@ -1,7 +1,6 @@
 ﻿using KaravanCoffeeWebAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KaravanCoffeeWebAPI.Models
 {
@@ -28,6 +27,8 @@ namespace KaravanCoffeeWebAPI.Models
     {
         public int CategoryId { get; set; }
 
-        public IList<ProductDTO> Products { get; set; }
+        public IList<ProductDTO> products { get; set; }
+        public IList<SubCategoryDTO> subCategories { get; set; }
+
     }
 }

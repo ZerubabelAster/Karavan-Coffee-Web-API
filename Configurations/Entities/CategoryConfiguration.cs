@@ -14,35 +14,63 @@ namespace KaravanCoffeeWebAPI.Configurations.Entities
                     CategoryId = 1,
                     CategoryName = "ALCOHOLIC BEVERAGES",
                     CategoryDescription = "",
-                    ImagePath = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
                 },
                 new Category
                 {
                     CategoryId = 2,
-                    CategoryName = "Cake",
+                    CategoryName = "BAKERY",
                     CategoryDescription = "",
-                    ImagePath = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
                 },
                 new Category
                 {
                     CategoryId = 3,
-                    CategoryName = "Bakery",
+                    CategoryName = "CAKE",
                     CategoryDescription = "",
-                    ImagePath = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
                 },
                 new Category
                 {
                     CategoryId = 4,
-                    CategoryName = "Ice Cream",
+                    CategoryName = "COLD BEVERAGES",
                     CategoryDescription = "",
-                    ImagePath = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
                 },
                 new Category
                 {
                     CategoryId = 5,
-                    CategoryName = "Habeshan Dish",
+                    CategoryName = "FAST FOOD",
                     CategoryDescription = "",
-                    ImagePath = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
+                },
+                new Category
+                {
+                    CategoryId = 6,
+                    CategoryName = "FRUIT BEVERAGES",
+                    CategoryDescription = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
+                },
+                new Category
+                {
+                    CategoryId = 7,
+                    CategoryName = "HOT BEVERAGES",
+                    CategoryDescription = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
+                },
+                new Category
+                {
+                    CategoryId = 8,
+                    CategoryName = "ICE CREAM",
+                    CategoryDescription = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
+                },
+                new Category
+                {
+                    CategoryId = 9,
+                    CategoryName = "SALES SUPPORT",
+                    CategoryDescription = "",
+                    ImagePath = "http://karavancoffee1-001-site1.atempurl.com/Images/Products/NoPicture.jpg",
                 }
                 );
         }

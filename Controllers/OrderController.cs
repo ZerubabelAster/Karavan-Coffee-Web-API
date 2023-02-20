@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
+using CoreApiResponse;
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KaravanCoffeeWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrderController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<OrderController> _logger;
@@ -32,12 +32,12 @@ namespace KaravanCoffeeWebAPI.Controllers
             {
                 var orders = await _unitOfWork.Orders.GetAll();
                 var results = _mapper.Map<List<OrderDTO>>(orders);
-                return Ok(results);
+                return CustomResult("Order Loaded Succssfully", results, System.Net.HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetOrders)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetOrders)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -49,12 +49,12 @@ namespace KaravanCoffeeWebAPI.Controllers
             {
                 var orders = await _unitOfWork.Orders.Get(q => q.OrderId == id);
                 var result = _mapper.Map<OrderDTO>(orders);
-                return Ok(result);
+                return CustomResult($"Order Loaded Succfully", result, System.Net.HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetOrder)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetOrder)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -68,7 +68,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateOrder)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Post Attempt {nameof(CreateOrder)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
@@ -77,12 +77,12 @@ namespace KaravanCoffeeWebAPI.Controllers
                 await _unitOfWork.Orders.Insert(order);
                 await _unitOfWork.Save();
 
-                return StatusCode(201, "Order Created Successfully");
+                return CustomResult("Order Created Successfully", System.Net.HttpStatusCode.Created);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateOrder)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult($"Something Went Wrong in the {nameof(CreateOrder)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -96,7 +96,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (!ModelState.IsValid || id < 1)
             {
                 _logger.LogError($"Invalid Update Attempt in {nameof(UpdateOrder)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Update Attempt in {nameof(UpdateOrder)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
@@ -105,19 +105,19 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (order == null)
                 {
                     _logger.LogError($"Invalid Update Attempt in {nameof(UpdateOrder)}");
-                    return BadRequest("submitted data is invalid");
+                    return CustomResult("Submitted data is invalid", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 _mapper.Map(updateOrderDTO, order);
                 _unitOfWork.Orders.Update(order);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Updated Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Someting Went Wrong in the {nameof(UpdateOrder)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Something Went Wrong in the {nameof(UpdateOrder)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -131,7 +131,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (id < 1)
             {
                 _logger.LogError($"Invalid Delete attemp in {nameof(DeleteOrder)}");
-                return BadRequest();
+                return CustomResult($"Invalid Delete attempt in {nameof(DeleteOrder)}");
             }
 
             try
@@ -140,18 +140,18 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (order == null)
                 {
                     _logger.LogError($"Invalid Delete attemp in {nameof(DeleteOrder)}");
-                    return BadRequest("Submitted data is invalid");
+                    return CustomResult($"Invlaid Delete attempt in {nameof(DeleteOrder)}", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 await _unitOfWork.Orders.Delete(id);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Deleted Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Something Went Wrong in the {nameof(DeleteOrder)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult("Internal Server Error. Please Try Again Later", System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }

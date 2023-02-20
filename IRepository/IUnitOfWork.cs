@@ -22,6 +22,10 @@ namespace KaravanCoffeeWebAPI.IRepository
 
         IGenericRepository<Gallery> Galleries { get; }
 
+        IGenericRepository<Ingredient> Ingredients { get; }
+
+        IGenericRepository<Person> Persons { get; }
+
         Task Save();
     }
 }

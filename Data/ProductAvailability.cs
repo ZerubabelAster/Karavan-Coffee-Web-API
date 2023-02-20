@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KaravanCoffeeWebAPI.Data
 {
@@ -14,9 +13,9 @@ namespace KaravanCoffeeWebAPI.Data
         [ForeignKey(nameof(Branch))]
         public int BranchId { get; set; }
         public Branch Branch { get; set; }
-         
-        [ForeignKey(nameof(Product))] 
+
+        [ForeignKey(nameof(Product))]
         public int ProductId { get; set; }
-        public Product Product  { get; set; }
+        public Product Product { get; set; }
     }
 }

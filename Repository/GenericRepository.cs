@@ -2,10 +2,7 @@
 using KaravanCoffeeWebAPI.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using System;
-using System.IO;
 using System.Linq.Expressions;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace KaravanCoffeeWebAPI.Repository
 {
@@ -20,7 +17,7 @@ namespace KaravanCoffeeWebAPI.Repository
         {
             _context = context;
             _db = _context.Set<T>();
-            _hostingEnvironment= webHostEnvironment;
+            _hostingEnvironment = webHostEnvironment;
         }
 
         public async Task Delete(int id)
@@ -37,19 +34,24 @@ namespace KaravanCoffeeWebAPI.Repository
         public async Task<T> Get(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
             IQueryable<T> query = _db;
-            if(include != null)
+            if (include != null)
             {
                 query = include(query);
             }
-            
+            //return _context.Categories.Where(c => c.CategoryId == 1).Include(c => c.subCategories).f;
             return await query.AsNoTracking().FirstOrDefaultAsync(expression);
         }
 
-        public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> includes = null)
+        /*public async IList<Category> GetCategoriesWithDetails()
         {
             IQueryable<T> query = _db;
-            
-            if(expression != null)
+            return await query.AsNoTracking().
+        }*/
+        public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = null, /*Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,*/ List<string> includes = null)
+        {
+            IQueryable<T> query = _db;
+
+            if (expression != null)
             {
                 query = query.Where(expression);
             }
@@ -62,10 +64,10 @@ namespace KaravanCoffeeWebAPI.Repository
                 }
             }
 
-            if(orderBy != null)
+            /*if (orderBy != null)
             {
                 query = orderBy(query);
-            }        
+            }*/
 
             return await query.AsNoTracking().ToListAsync();
         }
@@ -83,7 +85,7 @@ namespace KaravanCoffeeWebAPI.Repository
         {
             //var upload = Path.Combine(_environment.WebRootPath, path, "posts", imageName);
 
-            using(FileStream stream = new FileStream(path, FileMode.Create))
+            using (FileStream stream = new FileStream(path, FileMode.Create))
             {
                 await image.CopyToAsync(stream);
                 stream.Close();
@@ -95,29 +97,28 @@ namespace KaravanCoffeeWebAPI.Repository
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public string UploadImage(IFormFile image)
+        public string UploadImage(IFormFile image, string path)
         {
-
             string fileName = Path.GetFileName(image.FileName);
-            string pathAndFileName = GetPathAndFileName(fileName);
-
+            string uniqueFileName = UniqueFileName(fileName);
+            string pathAndFileName = _hostingEnvironment.WebRootPath + path + uniqueFileName;
+            string dir = _hostingEnvironment.WebRootPath + path;
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
             using (FileStream stream = new FileStream(pathAndFileName, FileMode.Create))
             {
                 image.CopyToAsync(stream);
                 stream.Close();
             }
-            return pathAndFileName;
+
+            return uniqueFileName;
         }
 
-        private string GetPathAndFileName(string fileName)
+        private string UniqueFileName(string fileName)
         {
-            string path = _hostingEnvironment.ContentRootPath + Constant.DefaultProductImagePath;
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            return path + Path.GetFileNameWithoutExtension(fileName) 
-                + "_" + Guid.NewGuid().ToString().Substring(0, 4) 
-                + Path.GetExtension(fileName);
+            return string.Concat(Path.GetFileNameWithoutExtension(fileName)
+, "_", Guid.NewGuid().ToString().AsSpan(0, 4)
+, Path.GetExtension(fileName));
         }
     }
 }

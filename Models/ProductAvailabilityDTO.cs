@@ -1,6 +1,4 @@
-﻿using KaravanCoffeeWebAPI.Data;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KaravanCoffeeWebAPI.Models
 {
@@ -17,7 +15,7 @@ namespace KaravanCoffeeWebAPI.Models
         [Required]
         public int BranchId { get; set; }
 
-        [Required]  
+        [Required]
         public int ProductId { get; set; }
     }
 

@@ -1,10 +1,9 @@
-﻿using KaravanCoffeeWebAPI.Models;
-
-namespace KaravanCoffeeWebAPI.Services
+﻿namespace KaravanCoffeeWebAPI.Services
 {
     public interface IAuthManager
     {
-        Task<bool> ValidateUser(LoginPersonDTO loginPersonDTO);
+        Task<bool> IsUserRegistered(string PhoneOREmail);
+        Task<bool> ValidateUser(string PhoneOREmail, string password);
 
         Task<string> CreateToken();
     }

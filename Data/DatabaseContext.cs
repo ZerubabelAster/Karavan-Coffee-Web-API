@@ -18,6 +18,10 @@ namespace KaravanCoffeeWebAPI.Data
         public DbSet<Branch> Branches { get; set; }
         public DbSet<ProductAvailability> ProductAvailability { get; set; }
         public DbSet<LoyalityDetail> LoyalityDetail { get; set; }
+        public DbSet<Gallery> Galleries { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,7 +30,8 @@ namespace KaravanCoffeeWebAPI.Data
             builder.ApplyConfiguration(new SubCategoryConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new BranchConfiguration());
 
-        }  
+        }
     }
 }

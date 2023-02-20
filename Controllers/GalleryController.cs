@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
+using CoreApiResponse;
 using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace KaravanCoffeeWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GalleryController : ControllerBase
+    public class GalleryController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<GalleryController> _logger;
@@ -26,23 +25,23 @@ namespace KaravanCoffeeWebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> GetGalleries()
         {
             try
             {
                 var galleries = await _unitOfWork.Galleries.GetAll();
                 var results = _mapper.Map<List<GalleryDTO>>(galleries);
-                return Ok(results);
+                return CustomResult("Gallery Loaded Succssfully", results, System.Net.HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetGalleries)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Lagter.");
+                return CustomResult($"Something Went Wrong in the {nameof(GetGalleries)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
-        [Authorize(Roles = "Administrator, Branch Admin")]
+        //[Authorize(Roles = "Administrator, Branch Admin")]
         [HttpGet("{id:int}", Name = "GetGallery")]
         public async Task<IActionResult> GetGallery(int id)
         {
@@ -50,40 +49,41 @@ namespace KaravanCoffeeWebAPI.Controllers
             {
                 var gallery = await _unitOfWork.Galleries.Get(q => q.GalleryId == id);
                 var result = _mapper.Map<GalleryDTO>(gallery);
-                return Ok(result);
+                return CustomResult($"Gallery Loaded Succfully", result, System.Net.HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetGalleries)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later.");
+                _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetGallery)}");
+                return CustomResult($"Something Went Wrong in the {nameof(GetGallery)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateGallery([FromBody] CreateGalleryDTO  galleryDTO)
+        public async Task<IActionResult> CreateGallery([FromForm] CreateGalleryDTO galleryDTO)
         {
             if (!ModelState.IsValid)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateGallery)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Post Attempt {nameof(CreateGallery)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
             {
                 var gallery = _mapper.Map<Gallery>(galleryDTO);
+                gallery.ImagePath = Constant.DefalutGalleryImagepathURL + _unitOfWork.Galleries.UploadImage(galleryDTO.Image, Constant.DefaultGalleryImagePath);
                 await _unitOfWork.Galleries.Insert(gallery);
                 await _unitOfWork.Save();
 
-                return StatusCode(201, "Gallery Created Successfully");
+                return CustomResult("Gallery Created Successfully", System.Net.HttpStatusCode.Created);
             }
             catch (Exception)
             {
                 _logger.LogError($"Invalid POST Attempt in {nameof(CreateGallery)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult($"Something Went Wrong in the {nameof(CreateGallery)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -92,12 +92,12 @@ namespace KaravanCoffeeWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateGallery(int id, [FromBody] UpdateGalleryDTO updateGalleryDTO)
+        public async Task<IActionResult> UpdateGallery(int id, [FromForm] UpdateGalleryDTO updateGalleryDTO)
         {
             if (!ModelState.IsValid || id < 1)
             {
                 _logger.LogError($"Invalid Update Attempt in {nameof(UpdateGallery)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Invalid Update Attempt in {nameof(UpdateGallery)}", System.Net.HttpStatusCode.BadRequest);
             }
 
             try
@@ -106,19 +106,19 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (gallery == null)
                 {
                     _logger.LogError($"Invalid Update Attempt in {nameof(UpdateGallery)}");
-                    return BadRequest("submitted data is invalid");
+                    return CustomResult("Submitted data is invalid", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 _mapper.Map(updateGalleryDTO, gallery);
                 _unitOfWork.Galleries.Update(gallery);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Updated Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Someting Went Wrong in the {nameof(UpdateGallery)}");
-                return BadRequest(ModelState);
+                return CustomResult($"Something Went Wrong in the {nameof(UpdateGallery)}", System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -132,7 +132,7 @@ namespace KaravanCoffeeWebAPI.Controllers
             if (id < 1)
             {
                 _logger.LogError($"Invalid Delete attemp in {nameof(DeleteGallery)}");
-                return BadRequest();
+                return CustomResult($"Invalid Delete attempt in {nameof(DeleteGallery)}");
             }
 
             try
@@ -141,18 +141,18 @@ namespace KaravanCoffeeWebAPI.Controllers
                 if (gallery == null)
                 {
                     _logger.LogError($"Invalid Delete attemp in {nameof(DeleteGallery)}");
-                    return BadRequest("Submitted data is invalid");
+                    return CustomResult($"Invlaid Delte attempt in {nameof(DeleteGallery)}", System.Net.HttpStatusCode.BadRequest);
                 }
 
                 await _unitOfWork.Galleries.Delete(id);
                 await _unitOfWork.Save();
 
-                return NoContent();
+                return CustomResult("Deleted Successfully", System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Something Went Wrong in the {nameof(DeleteGallery)}");
-                return StatusCode(500, "Internal Server Error. Please Try Again Later");
+                return CustomResult("Internal Server Error. Please Try Again Later", System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }

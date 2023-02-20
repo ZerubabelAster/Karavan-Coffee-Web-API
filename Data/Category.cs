@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using KaravanCoffeeWebAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KaravanCoffeeWebAPI.Data
 {
@@ -11,13 +11,13 @@ namespace KaravanCoffeeWebAPI.Data
 
         public string CategoryDescription { get; set; }
 
-        [NotMapped]
-        public IFormFile Image { get; set; }
+        /*[NotMapped]
+        public IFormFile Image { get; set; }*/
 
         [HiddenInput(DisplayValue = false)]
         public string ImagePath { get; set; }
 
-        public virtual IList<Product> Products { get; set; }
-
+        public virtual IList<Product> products { get; set; }
+        public virtual IList<SubCategory> subCategories { get; set; }
     }
 }

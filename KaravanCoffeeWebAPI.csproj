@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="CoreApiResponse" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.12" />
@@ -42,10 +43,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Asset\Avatars\" />
-    <Folder Include="Asset\Galleries\" />
     <Folder Include="logs\" />
     <Folder Include="Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\Avatars\male-user-avatar.png" />
+    <None Include="wwwroot\Images\Galleries\cake 2.jpg" />
+    <None Include="wwwroot\Images\Galleries\cake.jpg" />
+    <None Include="wwwroot\Images\Galleries\Coffee.jpg" />
+    <None Include="wwwroot\Images\Galleries\Pizza.jpg" />
+    <None Include="wwwroot\Images\Products\burger table mate.jpg" />
+    <None Include="wwwroot\Images\Products\flyer-06_1b1a.png" />
+    <None Include="wwwroot\Images\Products\Habesha dish table mate.jpg" />
+    <None Include="wwwroot\Images\Products\juice &amp; Smoothie table mate_ce4c.jpg" />
+    <None Include="wwwroot\Images\Products\NoPicture.jpg" />
+    <None Include="wwwroot\Images\Products\Pizza_c4bc.jpg" />
   </ItemGroup>
 
 </Project>

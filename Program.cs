@@ -4,20 +4,10 @@ using KaravanCoffeeWebAPI.Data;
 using KaravanCoffeeWebAPI.IRepository;
 using KaravanCoffeeWebAPI.Repository;
 using KaravanCoffeeWebAPI.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Serilog;
-using Serilog.Events;
-using System.Configuration;
-using AutoMapper.Configuration;
-using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.IdentityModel.Tokens;
-using KaravanCoffeeWebAPI.Controllers;
 using KaravanCoffeeWebAPI.Services_1;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Serilog;
 
 Log.Logger = new LoggerConfiguration()
 .WriteTo.Console()
@@ -38,7 +28,7 @@ builder.Host.UseSerilog((ctx, lc) => lc
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false)
                 .AddEnvironmentVariables();*/
- 
+
 // Add services to the container.
 builder.Services.AddDbContext<DatabaseContext>(opt =>
 {
@@ -52,6 +42,17 @@ builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.Configure<SMSOptions>(builder.Configuration);
+builder.Services.AddCors(o =>
+{
+    o.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    }
+
+    );
+});
 builder.Services.AddAutoMapper(typeof(MapperInitilizer));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthManager, AuthManager>();
@@ -106,10 +107,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 //}
 
+app.UseStaticFiles();
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();

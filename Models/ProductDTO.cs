@@ -1,17 +1,13 @@
-﻿using AutoMapper.Configuration.Annotations;
-using KaravanCoffeeWebAPI.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
-using Xunit;
-using Xunit.Sdk;
 
 namespace KaravanCoffeeWebAPI.Models
 {
     public class CreateProductDTO
     {
+        private const string time = ("00:00:00");
+
         [Required]
         public string ProductCode { get; set; }
 
@@ -28,7 +24,6 @@ namespace KaravanCoffeeWebAPI.Models
         [Required]
         public bool Active { get; set; }
 
-        public bool RequireExtra { get; set; }
 
         [DefaultValue(0)]
         public double Discount { get; set; }
@@ -37,8 +32,13 @@ namespace KaravanCoffeeWebAPI.Models
         [Range(1, 5)]
         public double Rating { get; set; }
 
-        public int TotalOrdered { get; set; }
-
+        [DefaultValue(0)]
+        public int AverageQueueDay { get; set; }
+        [DefaultValue(time)]
+        public TimeOnly AverageQueueTime { get; set; }
+        [DefaultValue(false)]
+        public bool Orderable { get; set; }
+        public string Tag { get; set; }
         //[RequestSizeLimit(10485760)] /*, ErrorMessage = "File Size Must be"*/
         public IFormFile Image { get; set; }
 
@@ -57,5 +57,7 @@ namespace KaravanCoffeeWebAPI.Models
     public class ProductDTO : CreateProductDTO
     {
         public int ProductId { get; set; }
+
+        public ICollection<IngredientDTO> IngredientsDTO { get; set; }
     }
 }
